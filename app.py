@@ -154,6 +154,56 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
     ),
 
 
+@app.callback(
+    Output("away_team_dropdown", "options"),
+    Output("home_team_dropdown", "options"),
+    Input("power_rank_JSON", "data"),
+)
+def create_team_dropdowns(power_rank_JSON):
+    print("Reached Creating Team Dropdowns")
+    
+    #Convert JSON to df
+    power_rank_df = pd.read_json(power_rank_JSON)
+
+    #Create team dropdown options
+    team_dropdown_options = dt.get_team_dropdowns(power_rank_df)
+
+    print("Reached end of create_team_dropdowns")
+
+    return team_dropdown_options, team_dropdown_options
+
+@app.callback(
+    Output("away_win_prob", "children"),
+    Output("home_win_prob", "children"),
+    Input("away_team_dropdown", "value"),
+    Input("home_team_dropdown", "value"),
+    Input("power_rank_JSON", "data"),
+    prevent_initial_call = True,
+)
+def get_game_prob(away_power_rank, home_power_rank, power_rank_JSON):
+    print("Reached Getting Game Prob")
+    if away_power_rank is None or home_power_rank is None or power_rank_JSON is None:
+        print("Preventing Update from get_game_prob")
+        if away_power_rank is None:
+            print("away_team is None")
+        if home_power_rank is None:
+            print("home_team is None")
+        if power_rank_JSON is None:
+            print("power_rank_JSON is None")
+        return None, None
+    
+    #Convert JSON to df
+    power_rank_df = pd.read_json(power_rank_JSON)
+
+    #Get single game win probability
+    away_win_prob, home_win_prob = dt.get_single_game_win_prob(away_power_rank, home_power_rank)
+
+    print("Reached end of get_game_prob")
+
+    return "{:.1f}%".format(away_win_prob * 100), "{:.1f}%".format(home_win_prob * 100)
+
+
+
 
 
 # Run the app

@@ -3,8 +3,6 @@ import ipdb
 from dash import dcc, html, dash_table
 import constants
 
-
-
 def get_game_results_df(game_results):
     extracted_data = []
     for game in game_results:
@@ -169,11 +167,29 @@ def get_future_game_prob(future_games_df, power_rank_df):
         home_power_rank = power_rank_df[power_rank_df["Team"] == home_team]["Power Rank"].values[0]
         away_power_rank = power_rank_df[power_rank_df["Team"] == away_team]["Power Rank"].values[0]
 
-        #Get probability of home team winning
-        home_win_prob = ((home_power_rank * (1 - away_power_rank) * constants.HOME_FIELD_ADVANTAGE) / ((home_power_rank * (1 - away_power_rank) * constants.HOME_FIELD_ADVANTAGE) + ((1 - home_power_rank) * away_power_rank * (1 - constants.HOME_FIELD_ADVANTAGE))))
-
+        #Get single game win probability
+        away_win_prob, home_win_prob = get_single_game_win_prob(away_power_rank, home_power_rank)
+        
         #Add probability to "HomeWinPct" column in future games df in the same row as the game
         future_games_df.at[index, "HomeWinPct"] = home_win_prob
 
     return future_games_df
 
+def get_single_game_win_prob(away_power_rank, home_power_rank):
+    #Get probability of each team winning single matchup
+    home_win_prob = ((home_power_rank * (1 - away_power_rank) * constants.HOME_FIELD_ADVANTAGE) / ((home_power_rank * (1 - away_power_rank) * constants.HOME_FIELD_ADVANTAGE) + ((1 - home_power_rank) * away_power_rank * (1 - constants.HOME_FIELD_ADVANTAGE))))
+    away_win_prob = 1 - home_win_prob
+
+    return away_win_prob, home_win_prob
+
+
+def get_team_dropdowns(power_rank_df):
+    new_power_rank_df = power_rank_df.copy()
+    
+    #Sort alphabetical by team
+    new_power_rank_df = new_power_rank_df.sort_values(by=["Team"], ascending=True)
+
+    #Create dropdown options
+    team_dropdown_options = [{'label': team, 'value': power_rank} for team, power_rank in zip(power_rank_df['Team'], power_rank_df['Power Rank'])]
+
+    return team_dropdown_options

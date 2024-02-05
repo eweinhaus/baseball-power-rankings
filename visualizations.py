@@ -23,17 +23,18 @@ def create_standings_table(standings_df):
 
 def create_power_rank_graph(power_rank_df):
     # Format data
-    power_rank_df['TeamNickname'] = power_rank_df['Team'].map(lambda x: x.split()[-1])
-    power_rank_df['PowerRank'] = power_rank_df['Power Rank'].map(lambda x: "{:.1f}".format(x*100))
+    new_power_rank_df = power_rank_df.copy()
+    new_power_rank_df['TeamNickname'] = new_power_rank_df['Team'].map(lambda x: x.split()[-1])
+    new_power_rank_df['PowerRank'] = new_power_rank_df['Power Rank'].map(lambda x: "{:.1f}".format(x*100))
 
 
     # Define hover text
-    hover_text = ['{}<br>{}'.format(team, prob) for team, prob in zip(power_rank_df['Team'], power_rank_df['PowerRank'])]
+    hover_text = ['{}<br>{}'.format(team, prob) for team, prob in zip(new_power_rank_df['Team'], new_power_rank_df['PowerRank'])]
 
     # Define data for the graph
     data = [{
-        'x': power_rank_df['TeamNickname'],
-        'y': power_rank_df['PowerRank'],
+        'x': new_power_rank_df['TeamNickname'],
+        'y': new_power_rank_df['PowerRank'],
         'yaxis': {'range': [0, 120]},
         'type': 'bar',
         'name': 'Power Rank',

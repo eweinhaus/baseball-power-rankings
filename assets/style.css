@@ -33,6 +33,10 @@ h2 {
     overflow: scroll;
 }
 
+.table_holder_3 {
+    overflow: hidden;
+}
+
 .table_holder_top {
     height: 8vh;
     margin: 3vh 25vw 3vh 25vw;
@@ -86,11 +90,77 @@ tr:hover {
     width: 100%;
 }
 
+h3, h4 {
+    text-align: center;
+}
+
+.dropdown_titles, .win_prob_holders {
+    width: 50%;
+    padding: 0px;
+    margin-top: 5%;
+    margin-bottom: 2%;
+    clear: none;
+}
+
+.dropdown_titles {
+    margin-top: 7%;
+
+}
+
+#dropdown_title_left, #win_prob_left {
+    float: left;
+    clear: none;
+    margin-top: 4.25%;
+}
+
+#dropdown_title_right, #win_prob_right {
+    float: right;
+    clear: none;
+    margin-top: 4.25%;
+}
+
+#dropdown_holder {
+    width: 100%;
+    margin: 0%;
+    padding: 0px;
+    clear: both;
+}
+
+#away_team_dropdown, #home_team_dropdown {
+    width: 38%;
+    margin: 0px;
+    padding: 0px;
+}
+
+#away_team_dropdown {
+    float: left;
+    margin: 0px 6% 0px 6%;
+}
+
+#home_team_dropdown {
+    float: right;
+    margin: 0px 6% 0px 6%;
+}
+
+.win_prob_holders h2 {
+    text-align: center;
+    vertical-align: middle;
+    width: 43%;
+    margin: 0% 28.5% 10px 28.5%;
+    background-color: var(--pale_blue);
+    color: var(--dark_blue);
+    padding: 6vh 0px 4vh 0px;
+    min-height: 40px;
+}
+
 /* Screen Sizing */
 @media only screen and (max-width: 1000px) {
     .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
         width: 96vw;
         margin: 0vh 2vw 3vh 2vw;
+    }
+    .table_holder_3 {
+        height: 100%;
     }
     .table_holder_top {
         margin: 3vh 10vw 3vh 10vw;
