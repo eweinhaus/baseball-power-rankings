@@ -100,6 +100,7 @@ def calc_pythag_wins(run_differential_df):
     league_exponent = ((run_differential_df["RunsFor"].sum() + run_differential_df["RunsAgainst"].sum()) / run_differential_df["GamesPlayed"].sum()) ** constants.PYTHAG_EXPONENT
     
     #Initialize New Columns
+    run_differential_df = run_differential_df.copy()
     run_differential_df["Pythagorean Win Percentage"] = None
 
     for index, row in run_differential_df.iterrows():

@@ -43,7 +43,8 @@ def get_game_results(go):
     Input("game_results_JSON", "data"),
     prevent_initial_call = True,
 )
-def create_standings(game_results_JSON):    
+def create_standings(game_results_JSON):
+    print("Reached Creating Standings")    
     #Convert game results to df
     game_results_df = pd.read_json(game_results_JSON)
 
@@ -65,6 +66,7 @@ def create_standings(game_results_JSON):
     prevent_initial_call = True,
 )
 def create_power_rank(standings_JSON, game_results_JSON):
+    print("Reached Creating Power Rank")
     if standings_JSON is None or game_results_JSON is None:
         print("Preventing Update from create_power_rank")
         if standings_JSON is None:
@@ -90,6 +92,8 @@ def create_power_rank(standings_JSON, game_results_JSON):
     power_rank_graph = viz.create_power_rank_graph(power_rank_df)
     power_rank_JSON = power_rank_df.to_json()
 
+    print("Reached end of create_power_rank")
+
     return dcc.Graph(
         id='power_rank_graph',
         figure=power_rank_graph,
@@ -109,6 +113,7 @@ def create_power_rank(standings_JSON, game_results_JSON):
     prevent_initial_call = True,
 )
 def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
+    print("Reached Creating Playoff Prob")
     if future_games_JSON is None or standings_JSON is None or power_rank_JSON is None:
         print("Preventing Update from create_playoff_prob")
         if future_games_JSON is None:
@@ -135,6 +140,8 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
 
     #Create playoff probability table
     playoff_prob_table = viz.create_playoff_graph(playoff_prob_df)
+
+    print("Reached end of create_playoff_prob")
 
     return dcc.Graph(
         id='playoff_prob_graph',
