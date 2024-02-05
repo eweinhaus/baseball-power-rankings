@@ -1,5 +1,6 @@
-Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Outcome Predictor, and Playoff Probability. Deployed to https://baseball-power-rankings.onrender.com/
+Deployed to https://dash-playoff-odds.onrender.com (May be experiencing deployment issues)
 
+Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Outcome Predictor, and Playoff Probability.
 
 
 **1. Standings:**
