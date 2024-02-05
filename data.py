@@ -125,7 +125,7 @@ def get_sos(game_results_df, pythag_wins_df):
         #Get list of all previous opponents
         home_opponents = game_results_df[game_results_df['HomeTeam'] == team]["AwayTeam"]
         away_opponents = game_results_df[game_results_df['AwayTeam'] == team]["HomeTeam"]
-        all_opponents = home_opponents.append(away_opponents)
+        all_opponents = pd.concat([home_opponents, away_opponents])
 
         #get strength of team's past schedule
         sos_list = []
