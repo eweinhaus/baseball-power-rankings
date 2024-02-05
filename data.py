@@ -119,7 +119,7 @@ def get_sos(game_results_df, pythag_wins_df):
     sos_df = pythag_wins_df.copy()
 
     #Get list of all unique teams
-    teams = game_results_df['HomeTeam'].append(game_results_df['AwayTeam']).unique()
+    teams = pd.concat([game_results_df['HomeTeam'], game_results_df['AwayTeam']]).unique()
 
     for team in teams:
         #Get list of all previous opponents
