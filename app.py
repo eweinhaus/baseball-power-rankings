@@ -3,6 +3,7 @@ from dash import dcc, html, dash_table
 from dash.dependencies import Input, Output
 import pandas as pd
 import ipdb
+import os
 
 import frontend as fe
 import webcrawler as wc
@@ -10,6 +11,8 @@ import data as dt
 import constants
 import visualizations as viz
 import simulator as sim
+
+port = int(os.environ.get("PORT", 10000))
 
 # Initialize app and layout
 app = dash.Dash(__name__)
@@ -131,4 +134,4 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(debug=False)
+    app.run_server(debug=False, host="0.0.0.0", port=port)
