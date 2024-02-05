@@ -43,7 +43,7 @@ def get_game_results(go):
     Input("game_results_JSON", "data"),
     prevent_initial_call = True,
 )
-def create_standings(game_results_JSON):
+def create_standings(game_results_JSON):    
     #Convert game results to df
     game_results_df = pd.read_json(game_results_JSON)
 
@@ -65,6 +65,8 @@ def create_standings(game_results_JSON):
     prevent_initial_call = True,
 )
 def create_power_rank(standings_JSON, game_results_JSON):
+    if standings_JSON is None or game_results_JSON is None:
+        raise dash.exceptions.PreventUpdate
 
     #Convert JSONs to dfs
     standings_df = pd.read_json(standings_JSON)
@@ -102,6 +104,9 @@ def create_power_rank(standings_JSON, game_results_JSON):
     prevent_initial_call = True,
 )
 def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
+    if future_games_JSON is None or standings_JSON is None or power_rank_JSON is None:
+        raise dash.exceptions.PreventUpdate
+    
     #Convert JSONs to dfs
     future_games_df = pd.read_json(future_games_JSON)
     standings_df = pd.read_json(standings_JSON)
