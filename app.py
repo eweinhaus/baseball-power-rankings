@@ -131,4 +131,4 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
 
 # Run the app
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=False)
