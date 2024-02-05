@@ -66,6 +66,11 @@ def create_standings(game_results_JSON):
 )
 def create_power_rank(standings_JSON, game_results_JSON):
     if standings_JSON is None or game_results_JSON is None:
+        print("Preventing Update from create_power_rank")
+        if standings_JSON is None:
+            print("standings_JSON is None")
+        if game_results_JSON is None:
+            print("game_results_JSON is None")
         raise dash.exceptions.PreventUpdate
 
     #Convert JSONs to dfs
@@ -105,6 +110,13 @@ def create_power_rank(standings_JSON, game_results_JSON):
 )
 def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
     if future_games_JSON is None or standings_JSON is None or power_rank_JSON is None:
+        print("Preventing Update from create_playoff_prob")
+        if future_games_JSON is None:
+            print("future_games_JSON is None")
+        if standings_JSON is None:
+            print("standings_JSON is None")
+        if power_rank_JSON is None:
+            print("power_rank_JSON is None")
         raise dash.exceptions.PreventUpdate
     
     #Convert JSONs to dfs
