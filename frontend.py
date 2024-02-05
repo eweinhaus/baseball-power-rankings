@@ -45,31 +45,46 @@ def create_layout():
         html.Div(
             className = "table_holder_3",
             children = [
-                html.H2("Single Game Outcome Predictor"),
-                html.H3("Coming Soon", style={'text-align': 'center', 'margin-top': '50px'})
-                # dcc.Dropdown(
-                #     id='away_team_dropdown',
-                #     options=[
-                #         {'label': 'Team 1', 'value': 'Team 1'},
-                #         {'label': 'Team 2', 'value': 'Team 2'},
-                #         {'label': 'Team 3', 'value': 'Team 3'}
-                #     ],
-                #     value='Team 1'
-                # ),
-                # dcc.Dropdown(
-                #     id='home_team_dropdown',
-                #     options=[
-                #         {'label': 'Team 1', 'value': 'Team 1'},
-                #         {'label': 'Team 2', 'value': 'Team 2'},
-                #         {'label': 'Team 3', 'value': 'Team 3'}
-                #     ],
-                #     value='Team 2'
-                # ),
-                # html.H2("Home Win Probability:"),
-                # html.H2(id='home_win_prob'),
-                # html.H2("Away Win Probability:"),
-                # html.H2(id='away_win_prob'),
-
+                html.H2("Single Game Win Probability"),
+                html.Div(
+                    id = "dropdown_title_left",
+                    className = "dropdown_titles", 
+                    children = [
+                        html.H3("Away Team"),
+                    ]
+                ),
+                html.Div(
+                    id = "dropdown_title_right", 
+                    className = "dropdown_titles",
+                    children = [
+                        html.H3("Home Team"),
+                    ]
+                ),
+                html.Div(
+                    id = "dropdown_holder",
+                    children = [
+                        dcc.Dropdown(
+                            id='away_team_dropdown',
+                            ),
+                        dcc.Dropdown(
+                            id='home_team_dropdown',
+                        ),
+                    ]
+                ),
+                html.Div(
+                    id = "win_prob_left",
+                    className = "win_prob_holders",
+                    children = [
+                        html.H2(id='away_win_prob'),
+                    ]
+                ),
+                html.Div(
+                    id = "win_prob_right",
+                    className = "win_prob_holders",
+                    children = [
+                        html.H2(id='home_win_prob'),
+                    ]
+                ),
             ]
         ),
         html.Div(
