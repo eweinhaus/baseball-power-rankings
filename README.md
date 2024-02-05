@@ -9,9 +9,11 @@ Uses webcrawler to grab outcome of each game and create league standings updated
 
 **2. Power Rankings:**
 Takes each team's performance thus far (Runs Scored, Runs Allowed, and Games Played) and applies Bill James' Pythagorean Win Probability formula to estimate each team's expected win percentage vs. a league average team.
+
 ![Screen Shot 2024-02-04 at 11 18 03 PM](https://github.com/eweinhaus/baseball-power-rankings/assets/98419357/83e0f6ca-17b9-4962-b1d6-101ef8804e83)
 
 Using a derivative of Tangotigers win probability forumla, factors in each team's home field advantage and strength of schedule into pythagorean win percentage in order to get adjusted expected winning percentage (Power Rank)
+
 ![Screen Shot 2024-02-04 at 11 35 22 PM](https://github.com/eweinhaus/baseball-power-rankings/assets/98419357/cb255c93-8331-43ae-9c97-dc4e568e36bf)
 
 
