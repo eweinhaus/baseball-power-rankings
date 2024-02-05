@@ -169,3 +169,13 @@ h3, h4 {
         font-size: 24px;
     }
 }
+
+.Select--single.is-focused .Select-control {
+    border: 1px solid #D9D9D9; /* Adjust the border color as needed */
+    box-shadow: none;
+    height: auto; /* Prevents change in height */
+}
+
+.Select--single .Select-control {
+    padding: 0px 10px; /* Adjust as needed */
+}
