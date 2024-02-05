@@ -15,7 +15,7 @@ def create_layout():
         html.Div (
             className = "table_holder_top",
             children = [
-                html.H1("2023 Boston MABL Playoff Predictor")
+                html.H1("Boston MABL Playoff Predictor")
             ]
         ),
 

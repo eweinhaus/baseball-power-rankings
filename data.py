@@ -83,7 +83,7 @@ def get_standings(game_results_df):
     standings_df = standings_df.sort_values(by=['Points'], ascending=False)
     standings_df = standings_df.reset_index(drop=True)
 
-    print(standings_df)
+    #print(standings_df)
 
     return standings_df
 
