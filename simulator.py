@@ -26,10 +26,15 @@ def sim_remaining_games(standings_df, future_prob_df):
 
     # Simulate seasons
     for i in range(constants.NUM_SIMULATIONS):
-        #print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
+        if i == 0:
+            print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
+        if i % 100 == 0:
+            print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
         playoff_teams = sim_one_season(standings_dict, future_prob_df)
         for team in playoff_teams:
             outcomes_dict[team] += 1
+
+    print("Simulation complete")
 
     # Convert outcomes to DataFrame
     outcomes_df = pd.DataFrame({'Team': list(outcomes_dict.keys()), 
@@ -37,9 +42,12 @@ def sim_remaining_games(standings_df, future_prob_df):
     outcomes_df['Playoff Probability'] = outcomes_df['Made Playoffs'] / constants.NUM_SIMULATIONS
     outcomes_df = outcomes_df.sort_values(by='Playoff Probability', ascending=False)
     
+    
     #include teams that made playoffs zero times
     for team in standings_dict:
         if team not in outcomes_df["Team"].values:
-            outcomes_df = outcomes_df.append({"Team": team, "Made Playoffs": 0, "Playoff Probability": 0}, ignore_index=True)
+            new_row = {"Team": team, "Made Playoffs": 0, "Playoff Probability": 0}
+            outcomes_df = pd.concat([outcomes_df, pd.DataFrame([new_row])], ignore_index=True)
+
             
     return outcomes_df
