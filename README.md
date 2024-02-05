@@ -1,6 +1,6 @@
-Deployed to https://dash-playoff-odds.onrender.com (May be experiencing deployment issues)
+Deployed to https://dash-playoff-odds.onrender.com
 
-Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Outcome Predictor, and Playoff Probability.
+Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Win Probability, and Playoff Probability.
 
 
 **1. Standings:**
@@ -19,7 +19,7 @@ Using a derivative of Tangotigers win probability forumla, factors in each team'
 
 
 
-**3. Single Game Outcome Predictor:**
+**3. Single Game Win Probability:**
 Applies Tangotiger's win probability formula to each team's power rank in order to estimate the percentage chance any given home team beats any given away team in a potential matchup.
 
 ![Screen Shot 2024-02-04 at 11 40 30 PM](https://github.com/eweinhaus/baseball-power-rankings/assets/98419357/78a790a6-b915-4c5e-807a-4524c92dfecd)
