@@ -96,6 +96,7 @@ def create_power_rank(standings_JSON, game_results_JSON):
 
     return dcc.Graph(
         id='power_rank_graph',
+        className = "graphs",
         figure=power_rank_graph,
         config={
             'displayModeBar': False,  # Hides the mode bar
@@ -146,6 +147,7 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
 
     return dcc.Graph(
         id='playoff_prob_graph',
+        className = "graphs",
         figure=playoff_prob_table,
         config={
             'displayModeBar': False,  # Hides the mode bar

@@ -162,9 +162,20 @@ h3, h4 {
     }
     .table_holder_top {
         margin: 3vh 10vw 3vh 10vw;
+        padding-bottom: 20px;
+        height: 100%;
     }
     h1 {
         font-size: 24px;
+    }
+    .win_prob_holders h2 {
+        width: 45%;
+        margin: 0% 27.5% 10px 27.5%;
+        min-height: 35px;
+    }
+    table {
+        margin-top: 8px;
+        margin-bottom: 8px;
     }
 }
 
