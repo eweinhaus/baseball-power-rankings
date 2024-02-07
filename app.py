@@ -107,6 +107,7 @@ def create_power_rank(standings_JSON, game_results_JSON):
 
 @app.callback(
     Output("playoff_graph_loader", "children"),
+    Output("loading_message", "style"),
     Input("future_games_JSON", "data"),
     Input("standings_JSON", "data"),
     Input("power_rank_JSON", "data"),
@@ -151,7 +152,7 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
             'staticPlot': False,  # Allows hover effects but prevents zooming
         },
         style={'height': '33vh', 'margin-top': '1vh', 'margin-bottom': '1vh', 'margin-left': '1vw', 'margin-right': '1vw'}
-    ),
+    ), {'display': 'none'},
 
 
 @app.callback(
@@ -177,23 +178,17 @@ def create_team_dropdowns(power_rank_JSON):
     Output("home_win_prob", "children"),
     Input("away_team_dropdown", "value"),
     Input("home_team_dropdown", "value"),
-    Input("power_rank_JSON", "data"),
     prevent_initial_call = True,
 )
-def get_game_prob(away_power_rank, home_power_rank, power_rank_JSON):
+def get_game_prob(away_power_rank, home_power_rank):
     print("Reached Getting Game Prob")
-    if away_power_rank is None or home_power_rank is None or power_rank_JSON is None:
+    if away_power_rank is None or home_power_rank is None:
         print("Preventing Update from get_game_prob")
         if away_power_rank is None:
             print("away_team is None")
         if home_power_rank is None:
             print("home_team is None")
-        if power_rank_JSON is None:
-            print("power_rank_JSON is None")
         return None, None
-    
-    #Convert JSON to df
-    power_rank_df = pd.read_json(power_rank_JSON)
 
     #Get single game win probability
     away_win_prob, home_win_prob = dt.get_single_game_win_prob(away_power_rank, home_power_rank)

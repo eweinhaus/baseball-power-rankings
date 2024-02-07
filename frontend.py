@@ -3,6 +3,9 @@ from dash import dcc
 from dash import html
 import pandas as pd
 import ipdb
+import constants
+
+num_sims = str(constants.NUM_SIMULATIONS)
 
 def create_layout():
     return html.Div([
@@ -88,19 +91,29 @@ def create_layout():
             ]
         ),
         html.Div(
-            className = "table_holder_4",
-            children = [
+            className="table_holder_4",
+            children=[
                 html.H2("Playoff Probability"),
                 dcc.Loading(
                     id="loading-2",
                     type="default",  # or 'graph', 'cube', 'circle', 'dot', or 'default'
                     fullscreen=False,  # Set to True to make the loading component take up the whole screen
                     children=[
-                        html.Div(id="playoff_graph_loader")
+                        html.Div(
+                            id="playoff_graph_loader"
+                            # Children will be dynamically updated content
+                        )
                     ],
                     className="custom-loading",
-                    style={'position': 'absolute', 'left': '50%', 'top': '100px'},  # Center the loading component
-                )
+                    style={'position': 'absolute', 'left': '50%', 'top': '75px'},  # Center the loading component
+                ),
+                html.Div(
+                    id = "loading_message",
+                    style={'margin-top': '175px', 'margin-bottom': '25px'},  # Center the loading component
+                    children=[
+                        html.H3("Simulating remainder of season "+ num_sims +" times. This may take a minute..."),
+                    ]
+                ),
             ]
         ),
     ])

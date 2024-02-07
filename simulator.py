@@ -26,8 +26,6 @@ def sim_remaining_games(standings_df, future_prob_df):
 
     # Simulate seasons
     for i in range(constants.NUM_SIMULATIONS):
-        if i == 0:
-            print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
         if i % 100 == 0:
             print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
         playoff_teams = sim_one_season(standings_dict, future_prob_df)

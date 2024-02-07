@@ -158,8 +158,6 @@ h3, h4 {
     .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
         width: 96vw;
         margin: 0vh 2vw 3vh 2vw;
-    }
-    .table_holder_3 {
         height: 100%;
     }
     .table_holder_top {
