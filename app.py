@@ -44,6 +44,7 @@ def get_game_results(go):
     prevent_initial_call = True,
 )
 def create_standings(game_results_JSON):
+    
     print("Reached Creating Standings")    
     #Convert game results to df
     game_results_df = pd.read_json(game_results_JSON)

@@ -5,6 +5,7 @@ import constants
 
 def get_game_results_df(game_results):
     extracted_data = []
+    ipdb.set_trace()
     for game in game_results:
         # Splitting at '@' to separate teams
         parts = game.split('@')
@@ -28,9 +29,11 @@ def get_game_results_df(game_results):
     future_games_df = game_results_df[game_results_df["AwayScore"] == ""][["AwayTeam", "HomeTeam"]].reset_index(drop=True)
     game_results_df = game_results_df[game_results_df["AwayScore"] != ""]
 
+
     #END OF SEASON HARDCODE: Removes last 90 played league games and set as "upcoming games" (for active seasons, only unplayed games will be removed)
-    future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
-    game_results_df = game_results_df.head(-90).reset_index(drop=True)
+    if constants.END_OF_SEASON == True:
+        future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
+        game_results_df = game_results_df.head(-90).reset_index(drop=True)
 
     return game_results_df, future_games_df
 
