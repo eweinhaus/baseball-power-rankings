@@ -14,7 +14,10 @@ def get_game_outcome_list(url):
             td = tr.find_all('td')[4]  # Get the 5th 'td' (index starts from 0)
             # Check if the 'td' does not contain an 'a' tag and contains "@"
             if not td.find('a') and "@" in td.get_text(strip=True):
-                new_game = td.get_text(strip=True).split("(")[0] + td.get_text(strip=True).split(")")[1]
+                try:
+                    new_game = td.get_text(strip=True).split("(")[0] + td.get_text(strip=True).split(")")[1]
+                except:
+                    new_game = td.get_text(strip=True)
                 future_games.append(new_game.strip())
 
 

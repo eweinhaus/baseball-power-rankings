@@ -29,8 +29,9 @@ def get_game_results_df(game_results):
     game_results_df = game_results_df[game_results_df["AwayScore"] != ""]
 
     #END OF SEASON HARDCODE: Removes last 90 played league games and set as "upcoming games" (for active seasons, only unplayed games will be removed)
-    future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
-    game_results_df = game_results_df.head(-90).reset_index(drop=True)
+    if constants.END_OF_SEASON == True:
+        future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
+        game_results_df = game_results_df.head(-90).reset_index(drop=True)
 
     return game_results_df, future_games_df
 
@@ -91,6 +92,7 @@ def get_pythagorean_wins_df(standings_df):
 
     pythag_wins_df = calc_pythag_wins(run_differential_df)
 
+
     return pythag_wins_df
 
 def calc_pythag_wins(run_differential_df):
@@ -105,8 +107,9 @@ def calc_pythag_wins(run_differential_df):
         #Get team specific exponent
         team_exponent = ((10 * league_exponent) + ((((row["RunsFor"] + row["RunsAgainst"]) / row["GamesPlayed"]) ** constants.PYTHAG_EXPONENT) * row["GamesPlayed"])) / (10 + row["GamesPlayed"])
         
-        #Calculate team pythagorean percentage
-        team_pythag_pct = (row["RunsFor"]**team_exponent) / ((row["RunsFor"]**team_exponent) + (row["RunsAgainst"] ** team_exponent))
+        #Calculate team pythagorean percentage (min 0.05, max 0.95)
+        team_pythag_pct = min(0.95, max(0.05, (row["RunsFor"]**team_exponent) / ((row["RunsFor"]**team_exponent) + (row["RunsAgainst"] ** team_exponent))))
+
         run_differential_df.at[index, "Pythagorean Win Percentage"] = team_pythag_pct
         
     return run_differential_df
@@ -126,7 +129,6 @@ def get_sos(game_results_df, pythag_wins_df):
         away_opponents = game_results_df[game_results_df['AwayTeam'] == team]["HomeTeam"]
         all_opponents = pd.concat([home_opponents, away_opponents])
 
-        #get strength of team's past schedule
         sos_list = []
         for opponent in all_opponents:
             sos_list.append(pythag_wins_df[pythag_wins_df["Team"] == opponent]["Pythagorean Win Percentage"].values[0])
@@ -152,6 +154,9 @@ def get_power_rank(power_rank_df, game_results_df):
 
     #Sort by power rank, tiebreaker is pythagorean win percentage
     power_rank_df = power_rank_df.sort_values(by=["Power Rank", "Pythagorean Win Percentage"], ascending=False)
+
+
+
 
     return power_rank_df
 
