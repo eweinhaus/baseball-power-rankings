@@ -20,7 +20,6 @@ def get_game_outcome_list(url):
                     new_game = td.get_text(strip=True)
                 future_games.append(new_game.strip())
 
-    ipdb.set_trace()
     #Get list of all finished games and scores
     a_tags = webpage_text.find_all('a')
     links_text_full = [a.get_text() for a in a_tags]

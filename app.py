@@ -1,6 +1,6 @@
 import dash
 from dash import dcc, html, dash_table
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import pandas as pd
 import ipdb
 import os
@@ -22,6 +22,9 @@ app.layout = fe.create_layout()
 @app.callback(
     Output("game_results_JSON", "data"),
     Output("future_games_JSON", "data"),
+    Output("game_results_regression_JSON", "data"),
+    Output("away_team_dropdown", "options"),
+    Output("home_team_dropdown", "options"),
     Input("go", "children"),
 )
 def get_game_results(go):
@@ -31,57 +34,64 @@ def get_game_results(go):
     all_games_list = wc.get_game_outcome_list(url)
 
     #Create game_results and future_games dataframes and create json
-    game_results_df, future_games_df = dt.get_game_results_df(all_games_list)
+    game_results_df, future_games_df, game_results_regression_df = dt.get_game_results_df(all_games_list)
     game_results_JSON = game_results_df.to_json()
     future_games_JSON = future_games_df.to_json()
+    game_results_regression_JSON = game_results_regression_df.to_json()
+    team_dropdown_options = constants.TEAM_NAMES
 
-    return game_results_JSON, future_games_JSON
+    return game_results_JSON, future_games_JSON, game_results_regression_JSON, team_dropdown_options, team_dropdown_options
 
 @app.callback(
     Output("standings_table", "children"),
     Output("standings_JSON", "data"),
+    Output("standings_regression_JSON", "data"),
     Input("game_results_JSON", "data"),
+    Input("game_results_regression_JSON", "data"),
     prevent_initial_call = True,
 )
-def create_standings(game_results_JSON):
+def create_standings(game_results_JSON, game_results_regression_JSON):
     
     print("Reached Creating Standings")    
     #Convert game results to df
     game_results_df = pd.read_json(game_results_JSON)
+    game_results_regression_df = pd.read_json(game_results_regression_JSON)
 
     #Create standings df
     standings_df = dt.get_standings(game_results_df)
+    ipdb.set_trace()
+    standings_regression_df = dt.get_standings(game_results_regression_df)
+
     
     #Create standings table and JSON
     standings_table = viz.create_standings_table(standings_df)
     standings_JSON = standings_df.to_json()
+    standings_regression_JSON = standings_regression_df.to_json()
 
 
-    return standings_table, standings_JSON
+    return standings_table, standings_JSON, standings_regression_JSON
 
 @app.callback(
     Output("power_rank_graph_loader", "children"),
     Output("power_rank_JSON", "data"),
     Input("standings_JSON", "data"),
-    Input("game_results_JSON", "data"),
+    Input("standings_regression_JSON", "data"),
+    State("game_results_regression_JSON", "data"),
     prevent_initial_call = True,
 )
-def create_power_rank(standings_JSON, game_results_JSON):
+def create_power_rank(standings_JSON, game_results_JSON, standings_regression_JSON):
     print("Reached Creating Power Rank")
-    if standings_JSON is None or game_results_JSON is None:
-        print("Preventing Update from create_power_rank")
-        if standings_JSON is None:
-            print("standings_JSON is None")
-        if game_results_JSON is None:
-            print("game_results_JSON is None")
+    if standings_JSON is None or game_results_JSON is None or standings_regression_JSON is None:
         raise dash.exceptions.PreventUpdate
 
     #Convert JSONs to dfs
     standings_df = pd.read_json(standings_JSON)
     game_results_df = pd.read_json(game_results_JSON)
+    standings_regression_df = pd.read_json(standings_regression_JSON)
 
+    ipdb.set_trace()
     #Get pythagorean wins
-    power_rank_df = dt.get_pythagorean_wins_df(standings_df)
+    power_rank_df = dt.get_pythagorean_wins_df(standings_regression_df)
 
     #Get strength of schedule
     power_rank_df = dt.get_sos(game_results_df, power_rank_df)
@@ -156,25 +166,6 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
         },
         style={'height': '33vh', 'margin-top': '1vh', 'margin-bottom': '1vh', 'margin-left': '1vw', 'margin-right': '1vw'}
     ), {'display': 'none'},
-
-
-@app.callback(
-    Output("away_team_dropdown", "options"),
-    Output("home_team_dropdown", "options"),
-    Input("power_rank_JSON", "data"),
-)
-def create_team_dropdowns(power_rank_JSON):
-    print("Reached Creating Team Dropdowns")
-    
-    #Convert JSON to df
-    power_rank_df = pd.read_json(power_rank_JSON)
-
-    #Create team dropdown options
-    team_dropdown_options = dt.get_team_dropdowns(power_rank_df)
-
-    print("Reached end of create_team_dropdowns")
-
-    return team_dropdown_options, team_dropdown_options
 
 @app.callback(
     Output("away_win_prob", "children"),

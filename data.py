@@ -5,7 +5,6 @@ import constants
 
 def get_game_results_df(game_results):
     extracted_data = []
-    ipdb.set_trace()
     for game in game_results:
         # Splitting at '@' to separate teams
         parts = game.split('@')
@@ -35,7 +34,15 @@ def get_game_results_df(game_results):
         future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
         game_results_df = game_results_df.head(-90).reset_index(drop=True)
 
-    return game_results_df, future_games_df
+    #Add regression to mean games
+    avg_runs = (game_results_df["AwayScore"].astype(int).mean() + game_results_df["HomeScore"].astype(int).mean()) / 2
+    game_results_regression_df = game_results_df.copy()
+    for team in constants.TEAM_NAMES:
+        for i in range(0, constants.NUM_REGRESSION_GAMES):
+            game_results_regression_df = game_results_regression_df._append({'AwayTeam': team, 'AwayScore': avg_runs, 'HomeTeam': "Regression", 'HomeScore': avg_runs}, ignore_index=True)
+            game_results_regression_df = game_results_regression_df._append({'AwayTeam': "Regression", 'AwayScore': avg_runs, 'HomeTeam': team, 'HomeScore': avg_runs}, ignore_index=True)
+
+    return game_results_df, future_games_df, game_results_regression_df
 
 
 # Function to determine the outcome of a game for a team
@@ -184,15 +191,3 @@ def get_single_game_win_prob(away_power_rank, home_power_rank):
     away_win_prob = 1 - home_win_prob
 
     return away_win_prob, home_win_prob
-
-
-def get_team_dropdowns(power_rank_df):
-    new_power_rank_df = power_rank_df.copy()
-    
-    #Sort alphabetical by team
-    new_power_rank_df = new_power_rank_df.sort_values(by=["Team"], ascending=True)
-
-    #Create dropdown options
-    team_dropdown_options = [{'label': team, 'value': power_rank} for team, power_rank in zip(power_rank_df['Team'], power_rank_df['Power Rank'])]
-
-    return team_dropdown_options
