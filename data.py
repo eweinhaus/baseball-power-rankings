@@ -33,6 +33,12 @@ def get_game_results_df(game_results):
         future_games_df = pd.concat([future_games_df, game_results_df.tail(90)[["AwayTeam", "HomeTeam"]].reset_index(drop=True)], ignore_index=True)  
         game_results_df = game_results_df.head(-90).reset_index(drop=True)
 
+    #PRESEASON HARDCODE: Add preseason games to game results
+    if constants.PRESEASON == True:
+        preseason_games = [["Greater Boston Bandits", 8, "Boston Phoenix", 16], ["Boston Phoenix", 9, "Bay State Raiders", 2]]
+        preseason_df = pd.DataFrame(preseason_games, columns=['AwayTeam', 'AwayScore', 'HomeTeam', 'HomeScore'])
+        game_results_df = pd.concat([preseason_df, game_results_df], ignore_index=True)
+
     return game_results_df, future_games_df
 
 
@@ -82,8 +88,6 @@ def get_standings(game_results_df):
     standings_df = standings_df.sort_values(by=['Points'], ascending=False)
     standings_df = standings_df.reset_index(drop=True)
 
-    #print(standings_df)
-
     return standings_df
 
 
@@ -107,8 +111,8 @@ def calc_pythag_wins(run_differential_df):
         #Get team specific exponent
         team_exponent = ((10 * league_exponent) + ((((row["RunsFor"] + row["RunsAgainst"]) / row["GamesPlayed"]) ** constants.PYTHAG_EXPONENT) * row["GamesPlayed"])) / (10 + row["GamesPlayed"])
         
-        #Calculate team pythagorean percentage (min 0.05, max 0.95)
-        team_pythag_pct = min(0.95, max(0.05, (row["RunsFor"]**team_exponent) / ((row["RunsFor"]**team_exponent) + (row["RunsAgainst"] ** team_exponent))))
+        #Calculate team pythagorean percentage
+        team_pythag_pct = min(constants.MAX_STRENGTH, max(constants.MIN_STRENGTH, (row["RunsFor"]**team_exponent) / ((row["RunsFor"]**team_exponent) + (row["RunsAgainst"] ** team_exponent))))
 
         run_differential_df.at[index, "Pythagorean Win Percentage"] = team_pythag_pct
         
@@ -148,20 +152,30 @@ def get_power_rank(power_rank_df, game_results_df):
         away_games = game_results_df[game_results_df["AwayTeam"] == row["Team"]].shape[0]
         hfa = ((constants.HOME_FIELD_ADVANTAGE * home_games) + ((1 - constants.HOME_FIELD_ADVANTAGE) * away_games)) / (home_games + away_games)
 
-        #Get team true win % (pythag win % adjusted for strength of schedule and home field advantage)
-        team_true_win_pct = ((row["Pythagorean Win Percentage"]*row["Strength of Schedule"]) * (1-hfa)) / (hfa - (row["Strength of Schedule"] * hfa) - (row["Pythagorean Win Percentage"] * hfa) + (row["Pythagorean Win Percentage"] * row["Strength of Schedule"]))
+        #Get team estimated win % (pythag win % adjusted for strength of schedule and home field advantage)
+        team_estimated_win_pct = (((row["Pythagorean Win Percentage"]*row["Strength of Schedule"]) * (1-hfa)) / (hfa - (row["Strength of Schedule"] * hfa) - (row["Pythagorean Win Percentage"] * hfa) + (row["Pythagorean Win Percentage"] * row["Strength of Schedule"])))
+        
+        #Regress to the mean
+        team_true_win_pct = regress_to_mean(row, team_estimated_win_pct)
+
         power_rank_df.at[index, "Power Rank"] = team_true_win_pct
 
     #Sort by power rank, tiebreaker is pythagorean win percentage
     power_rank_df = power_rank_df.sort_values(by=["Power Rank", "Pythagorean Win Percentage"], ascending=False)
 
-
-
-
     return power_rank_df
 
+def regress_to_mean(row, team_estimated_win_pct):
+    #Formula to regress team win % to mean
+    average = 0.5 * 3.5
+    estimated =  team_estimated_win_pct * row["GamesPlayed"] * 3.1
+    pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * 2.05
 
-def get_future_game_prob(future_games_df, power_rank_df):
+    return (average + estimated + pythag) / (3.5 + row["GamesPlayed"] * 5.15)
+
+
+
+def get_future_game_prob(future_games_df, power_rank_df):    
     #Iterate through games and get probability of home team winning
     for index, row in future_games_df.iterrows():
         #Get teams in game

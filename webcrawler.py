@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import ipdb
+import pandas as pd
 
 def get_game_outcome_list(url):
     #Get data from website
@@ -30,4 +31,36 @@ def get_game_outcome_list(url):
 
 
     return all_games
+
+
+def get_standings(url):
+    #Get data from website
+    response = requests.get(url)
+    webpage_text = BeautifulSoup(response.content, 'html.parser')
+
+    #Get all font tags with <a> tags
+    font_tags = webpage_text.find_all('font')
+
+    #Create blank standings dataframe
+    standings = pd.DataFrame(columns = ['Team', 'Win', 'Loss', 'Tie', 'RunsFor', 'RunsAgainst', 'GamesPlayed'])
+
+    for i in range(13, len(font_tags)):
+        if i % 8 == 5 and font_tags[i].find('a'):
+            team = font_tags[i].find('a').get_text()
+            win = int(font_tags[i + 1].get_text())
+            loss = int(font_tags[i + 2].get_text())
+            tie = int(font_tags[i + 3].get_text())
+            points = win * 2 + tie
+            runs_for = int(font_tags[i + 6].get_text())
+            runs_against = int(font_tags[i + 7].get_text())
+            games_played = sum([win, loss, tie])
+
+
+            standings = standings._append({'Team': team, 'Win': win, 'Loss': loss, 'Tie': tie, 'Points': points, 'RunsFor': runs_for, 'RunsAgainst': runs_against, 'GamesPlayed': games_played}, ignore_index=True)
+
+    return standings
+
+
+
+
 

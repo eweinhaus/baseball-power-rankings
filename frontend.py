@@ -13,6 +13,7 @@ def create_layout():
         dcc.Store(id = "game_results_JSON"),
         dcc.Store(id = "future_games_JSON"),
         dcc.Store(id = "standings_JSON"),
+        dcc.Store(id = "adj_standings_JSON"),
         dcc.Store(id = "power_rank_JSON"),
 
         html.Div (
