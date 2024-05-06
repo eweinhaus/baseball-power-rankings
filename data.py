@@ -167,11 +167,11 @@ def get_power_rank(power_rank_df, game_results_df):
 
 def regress_to_mean(row, team_estimated_win_pct):
     #Formula to regress team win % to mean
-    average = 0.5 * 3.5
+    average = 0.5 * 3
     estimated =  team_estimated_win_pct * row["GamesPlayed"] * 3.5
-    pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * 2
+    pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * 2.1
 
-    return (average + estimated + pythag) / (3.5 + row["GamesPlayed"] * 5.5)
+    return (average + estimated + pythag) / (3 + row["GamesPlayed"] * 5.6)
 
 
 
