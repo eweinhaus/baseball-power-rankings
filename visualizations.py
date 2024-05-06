@@ -45,10 +45,10 @@ def create_power_rank_graph(power_rank_df):
 
     # Define layout for the graph
     layout = {
-        'yaxis': {'title': 'Power Rank'},
+        'yaxis': {'title': 'Power Rank', 'range': [0, 105]},
         'showlegend': False,
         'dragmode': False,  # Disable zoom by click-and-drag
-        'margin': {'t': 0, 'b': 30, 'l': 50, 'r': 15},
+        'margin': {'t': 0, 'b': 40, 'l': 50, 'r': 22.5},
     }
 
     # Return the figure object with layout and configuration to disable interaction
@@ -67,7 +67,7 @@ def create_playoff_graph(playoff_prob_df):
     data = [{
         'x': playoff_prob_df['TeamNickname'],
         'y': playoff_prob_df['Playoff Probability'],
-        'yaxis': {'range': [0, 100]},
+        'yaxis': {'range': [0, 105]},
         'type': 'bar',
         'name': 'Playoff Probability',
         'text': hover_text,  # Set hover text
@@ -77,10 +77,10 @@ def create_playoff_graph(playoff_prob_df):
 
     # Define layout for the graph
     layout = {
-        'yaxis': {'title': 'Probability (%)'},
+        'yaxis': {'title': 'Probability (%)', 'range': [0, 105]},
         'showlegend': False,
         'dragmode': False,  # Disable zoom by click-and-drag
-        'margin': {'t': 0, 'b': 30, 'l': 50, 'r': 15},
+        'margin': {'t': 0, 'b': 40, 'l': 50, 'r': 22.5},
     }
 
     # Return the figure object with layout and configuration to disable interaction
