@@ -156,7 +156,10 @@ def get_power_rank(power_rank_df, game_results_df):
         team_estimated_win_pct = (((row["Pythagorean Win Percentage"]*row["Strength of Schedule"]) * (1-hfa)) / (hfa - (row["Strength of Schedule"] * hfa) - (row["Pythagorean Win Percentage"] * hfa) + (row["Pythagorean Win Percentage"] * row["Strength of Schedule"])))
         
         #Regress to the mean
-        team_true_win_pct = regress_to_mean(row, team_estimated_win_pct)
+        if constants.REGRESS_TO_MEAN == True:
+            team_true_win_pct = regress_to_mean(row, team_estimated_win_pct)
+        else:
+            team_true_win_pct = team_estimated_win_pct
 
         power_rank_df.at[index, "Power Rank"] = team_true_win_pct
 
@@ -166,12 +169,12 @@ def get_power_rank(power_rank_df, game_results_df):
     return power_rank_df
 
 def regress_to_mean(row, team_estimated_win_pct):
-    #Formula to regress team win % to mean
-    average = 0.5 * 3
-    estimated =  team_estimated_win_pct * row["GamesPlayed"] * 3.5
-    pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * 2.1
+    last_year_power_rank = (constants.LAST_YEAR_POWR_RANK[row["Team"]] / 100) * constants.REGRESS_LAST_YEAR
+    average = 0.5 * constants.REGRESS_500_GAMES
+    estimated =  team_estimated_win_pct * row["GamesPlayed"] * constants.REGRESS_ESTIMATED
+    pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * constants.REGRESS_PYTHAG
 
-    return (average + estimated + pythag) / (3 + row["GamesPlayed"] * 5.6)
+    return (average + estimated + pythag + last_year_power_rank) / (constants.REGRESS_LAST_YEAR + constants.REGRESS_500_GAMES + (row["GamesPlayed"] * (constants.REGRESS_ESTIMATED + constants.REGRESS_PYTHAG)))
 
 
 
