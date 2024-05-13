@@ -1,5 +1,3 @@
-Deployed to https://dash-playoff-odds.onrender.com
- 
 Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Win Probability, and Playoff Probability.
 
 
