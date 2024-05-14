@@ -38,33 +38,20 @@ h2 {
 }
 
 .table_holder_top {
-    height: 7.5vh;
+    height: 7.75vh;
     margin: 2vh 25vw 2vh 25vw;
 }
 
-.table_holder_2 {
-    height: 40vh;
-    width: 94vw;
-    margin: 0vh 3vw 3vh 3vw;
-    overflow-y: scroll;
-}
-.table_holder_1, .table_holder_3 {
-    height: 42.25vh;
-    width: 45.5vw;
-    margin: 0vh 1.5vw 3vh 3vw;
+.table_holder_1, .table_holder_3, .table_holder_2, .table_holder_4{
+    height: 100%;
+    width: 89vw;
+    margin: 2vh 5vw 2vh 5vw;
     float: left;
-}
-
-.table_holder_2, .table_holder_4 {
-    height: 42.25vh;
-    width: 45.5vw;
-    margin: 0vh 3vw 3vh 1.5vw;
-    float: right;
 }
 
 table {
     width: 96%;
-    margin: 1% 2% 0.2% 2%;
+    margin: 1% 2% 1% 2%;
     border-collapse: collapse;
     text-align: center;
     font-size: 11px;
