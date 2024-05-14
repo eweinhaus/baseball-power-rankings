@@ -30,7 +30,7 @@ h2 {
     background-color: white;
     box-shadow: 0px 3px 3px lightgray;
     border-radius: 8px;
-    overflow: scroll;
+    overflow: hidden;
 }
 
 .table_holder_3 {
@@ -38,27 +38,27 @@ h2 {
 }
 
 .table_holder_top {
-    height: 7.5vh;
-    margin: 2vh 25vw 2vh 25vw;
+    height: 7.25vh;
+    margin: 1.75vh 27.5vw 1.75vh 27.5vw;
 }
 
 .table_holder_2 {
     height: 40vh;
     width: 94vw;
-    margin: 0vh 3vw 3vh 3vw;
+    margin: 0vh 3vw 2.5vh 3vw;
     overflow-y: scroll;
 }
 .table_holder_1, .table_holder_3 {
-    height: 42.25vh;
+    height: 42vh;
     width: 45.5vw;
-    margin: 0vh 1.5vw 3vh 3vw;
+    margin: 0vh 1.5vw 2.5vh 3vw;
     float: left;
 }
 
 .table_holder_2, .table_holder_4 {
-    height: 42.25vh;
+    height: 42vh;
     width: 45.5vw;
-    margin: 0vh 3vw 3vh 1.5vw;
+    margin: 0vh 3vw 2.5vh 1.5vw;
     float: right;
 }
 
@@ -155,7 +155,7 @@ h3, h4 {
 }
 
 /* Screen Sizing */
-@media only screen and (max-width: 1000px) {
+@media only screen and (max-width: 1100px) {
     .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
         width: 96vw;
         margin: 0vh 2vw 3vh 2vw;
