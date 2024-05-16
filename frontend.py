@@ -5,7 +5,6 @@ import pandas as pd
 import constants
 
 num_sims = str(constants.NUM_SIMULATIONS)
-last_update = constants.LAST_UPDATE
 
 def create_layout():
     return html.Div([
@@ -24,8 +23,8 @@ def create_layout():
                     html.Li(html.A("Overview", href="#overview")),
                     html.Li(html.A("Standings", href="#standings")),
                     html.Li(html.A("Power Rankings", href="#power-rankings")),
-                    html.Li(html.A("Single Game Win Probability", href="#win-probability")),
-                    html.Li(html.A("Playoff Probability", href="#playoff-probability")),
+                    html.Li(html.A("Win Probability", href="#win-probability")),
+                    html.Li(html.A("Playoff Odds", href="#playoff-probability")),
                 ])
             ]
         ),
@@ -33,8 +32,8 @@ def create_layout():
         html.Div(id="overview", className="section", children=[
             html.H2("Overview"),
             html.Div(className="content", children=[
-                html.Img(src="/assets/BMBL_Logo.png", className="left"),
-                html.Div(className="right", children=[
+                html.Img(src="/assets/BMBL_Logo.png", className="left", id = "left1"),
+                html.Div(className="right", id = "right1", children=[
                     html.P([
                         "This Dash app is a live updating tool that predicts the playoff chances of each team in the Boston Metro Baseball League. ",
                         "The app crawls the league website to get the results of all games played so far this season. ",
@@ -52,8 +51,7 @@ def create_layout():
             html.H2("Standings"),
             html.Div(className="content", children=[
                 html.Div(className="left", children=[
-                    html.P(["This page uses a webcrawler to grab outcome of each game from the league website and create live league standings, updated automatically. ",
-                           "Last Update: {last_update}"])
+                    html.P(["This page uses a webcrawler to grab outcome of each game from the league website and create live league standings, updated automatically. "])
                 ]),
                 html.Div([
                     html.Table(id="standings_table"),

@@ -26,14 +26,13 @@ body {
 }
 
 p {
-    font-size: 1.2em;
-    line-height: 1.4;
+    font-size: 1.1em;
+    line-height: 1.3;
     text-align: justify;
 }
 
 .navbar {
-    width: 100%;
-    max-width: 100%;
+    width: 97.5%;
     background-color: var(--dark_blue);
     color: white;
     position: fixed;
@@ -50,12 +49,13 @@ p {
 .navbar h1 {
     margin: 0;
     font-size: 24px;
+    padding: 0.5em;
 }
 
 .navbar ul {
     list-style-type: none;
     margin: 0;
-    padding: 0;
+    padding: 0.75em;
     display: flex;
     gap: 1em;
     flex-wrap: wrap;
@@ -116,8 +116,12 @@ h2 {
     margin-bottom: 1em;
     font-size: 2.5em;
     text-align: center;
-    width: 100%;
-    padding-top: 1em; /* Ensure the title is at the top */
+    padding: 0.5em 1em;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    color: var(--dark_blue);
+    max-width: 80%;
 }
 
 .table_holder_top, .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
@@ -136,16 +140,33 @@ h2 {
     flex-wrap: wrap;
 }
 
+
 .left {
-    width: 45%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    width: 40%;
+    padding: 2.5%;
 }
 
 .right {
-    width: 45%;
-    padding-left: 10%;
+    width: 40%;
+    padding: 2.5%;
+}
+
+.left, .right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    margin: 2.5%;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#left1 {
+    width: 20%;
+}
+
+#right1 {
+    width: 60%;
 }
 
 .dropdown-holder {
@@ -176,7 +197,7 @@ h2 {
 }
 
 .custom-loading {
-    margin-top: 2em;
+    margin-top: 2em;    
 }
 
 /* Table Styling */
@@ -205,20 +226,26 @@ tr:hover td {
     background-color: var(--light_gray);
 }
 
+
 /* Responsive Styles */
 @media (max-width: 800px) {
     .content {
         flex-direction: column;
         align-items: center;
+        width: 95%;
+    }
+
+    #left1, #right1 {
+        width: 90%;
     }
 
     .left, .right {
-        width: 100%;
-        padding: 0;
+        width: 80%;
+        padding: 2.5%;
     }
 
     .right {
-        margin-top: 2em;
+        margin-top: 1em;
     }
 
     .dropdown-holder {
@@ -236,6 +263,7 @@ tr:hover td {
 
     .win-prob {
         width: 80%;
-        margin-bottom: 1em;
+        margin: 1em;
     }
+
 }
