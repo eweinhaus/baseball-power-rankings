@@ -1,6 +1,6 @@
 import dash
 from dash import dcc, html, dash_table
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 import pandas as pd
 import ipdb
 import os
@@ -107,14 +107,14 @@ def create_power_rank(standings_JSON, game_results_JSON):
 
 
 @app.callback(
-    Output("playoff_graph_loader", "children"),
-    Output("loading_message", "style"),
+    Output("playoff_graph_loader", "children", allow_duplicate=True),
+    Output("loading_message", "style", allow_duplicate=True),
     Input("future_games_JSON", "data"),
     Input("standings_JSON", "data"),
     Input("power_rank_JSON", "data"),
     prevent_initial_call = True,
 )
-def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
+def create_playoff_prob_1(future_games_JSON, standings_JSON, power_rank_JSON):
     print("Reached Creating Playoff Prob")
     if future_games_JSON is None or standings_JSON is None or power_rank_JSON is None:
         print("Preventing Update from create_playoff_prob")
@@ -137,7 +137,7 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
     
     
     #Simulate rest of season
-    playoff_prob_df = sim.sim_remaining_games(standings_df, future_prob_df)
+    playoff_prob_df = sim.sim_remaining_games(standings_df, future_prob_df, constants.NUM_SIMULATIONS)
     print(playoff_prob_df)
 
     #Create playoff probability table
@@ -154,7 +154,7 @@ def create_playoff_prob(future_games_JSON, standings_JSON, power_rank_JSON):
             'staticPlot': False,  # Allows hover effects but prevents zooming
         },
         style={'height': '33vh', 'margin-top': '1vh', 'margin-bottom': '1vh', 'margin-left': '1vw', 'margin-right': '1vw'}
-    ), {'display': 'none'},
+    ), {'display': 'none'}
 
 
 @app.callback(

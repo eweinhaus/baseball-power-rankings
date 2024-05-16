@@ -6,6 +6,11 @@
     --pale_blue: #D3E0E9;
     --hover_color: #1e4b7a; /* A shade lighter for hover effect */
     --active_color: #173b5c; /* A different color for active link */
+    --overview_bg: #f0f8ff; /* AliceBlue */
+    --standings_bg: #faebd7; /* AntiqueWhite */
+    --power_rank_bg: #e6e6fa; /* Lavender */
+    --win_prob_bg: #fff0f5; /* LavenderBlush */
+    --playoff_prob_bg: #f5f5dc; /* Beige */
 }
 
 html {
@@ -74,7 +79,6 @@ p {
     background-color: var(--hover_color);
 }
 
-.navbar a:active,
 .navbar a.active {
     background-color: var(--active_color);
 }
@@ -88,6 +92,26 @@ p {
     padding-top: 6em;
 }
 
+.section.overview {
+    background-color: var(--overview_bg);
+}
+
+.section.standings {
+    background-color: var(--standings_bg);
+}
+
+.section.power-rank {
+    background-color: var(--power_rank_bg);
+}
+
+.section.win-prob {
+    background-color: var(--win_prob_bg);
+}
+
+.section.playoff-prob {
+    background-color: var(--playoff_prob_bg);
+}
+
 h2 {
     margin-bottom: 1em;
     font-size: 2.5em;
@@ -98,12 +122,10 @@ h2 {
 
 .table_holder_top, .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
     padding: 2em;
-    background-color: white;
-    box-shadow: 0px 3px 3px lightgray;
+    background-color: none;
     border-radius: 8px;
-    width: 80%;
-    max-width: 1200px;
-    overflow: hidden;
+    max-width: 80%;
+    overflow: none;
 }
 
 .content {
@@ -115,7 +137,7 @@ h2 {
 }
 
 .left {
-    width: 50%;
+    width: 45%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -123,7 +145,7 @@ h2 {
 
 .right {
     width: 45%;
-    padding-left: 5%;
+    padding-left: 10%;
 }
 
 .dropdown-holder {
@@ -161,12 +183,11 @@ h2 {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1em;
 }
 
 th, td {
-    border: 1px solid var(--light_gray);
-    padding: 0.75em;
+    border: none;
+    padding: 0.5em;
     text-align: center;
 }
 
@@ -181,7 +202,7 @@ td {
 }
 
 tr:hover td {
-    background-color: var(--pale_blue);
+    background-color: var(--light_gray);
 }
 
 /* Responsive Styles */

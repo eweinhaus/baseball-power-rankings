@@ -5,6 +5,7 @@ import pandas as pd
 import constants
 
 num_sims = str(constants.NUM_SIMULATIONS)
+last_update = constants.LAST_UPDATE
 
 def create_layout():
     return html.Div([
@@ -50,12 +51,13 @@ def create_layout():
         html.Div(id="standings", className="section", children=[
             html.H2("Standings"),
             html.Div(className="content", children=[
+                html.Div(className="left", children=[
+                    html.P(["This page uses a webcrawler to grab outcome of each game from the league website and create live league standings, updated automatically. ",
+                           "Last Update: {last_update}"])
+                ]),
                 html.Div([
                     html.Table(id="standings_table"),
-                ], className="left"),
-                html.Div(className="right", children=[
-                    html.P("This page uses a webcrawler to grab outcome of each game from the league website and create live league standings, updated to the minute.")
-                ])
+                ], className="right"),
             ])
         ]),
 
@@ -116,7 +118,7 @@ def create_layout():
                     ]),
                 ], className="left"),
                 html.Div(className="right", children=[
-                    html.P("Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season 1000 times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.")
+                    html.P(f"Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season {num_sims} times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.")
                 ])
             ])
         ]),

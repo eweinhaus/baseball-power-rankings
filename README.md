@@ -28,6 +28,6 @@ Utilizes Dash callbacks in order to allow user to input any potential matchup an
 
 
 **4. Playoff Probability:**
-Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season 1000 times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.
+Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season 1500 times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.
 
 
