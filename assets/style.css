@@ -4,6 +4,12 @@
     --light_blue: #265699;
     --lighter_blue: #3E7CB1;
     --pale_blue: #D3E0E9;
+    --hover_color: #1e4b7a; /* A shade lighter for hover effect */
+    --active_color: #173b5c; /* A different color for active link */
+}
+
+html {
+    scroll-behavior: smooth; /* Smooth scrolling */
 }
 
 body {
@@ -12,11 +18,17 @@ body {
     color: var(--dark_blue);
     margin: 0;
     padding: 0;
-    scroll-behavior: smooth; /* Smooth scrolling */
+}
+
+p {
+    font-size: 1.2em;
+    line-height: 1.4;
+    text-align: justify;
 }
 
 .navbar {
     width: 100%;
+    max-width: 100%;
     background-color: var(--dark_blue);
     color: white;
     position: fixed;
@@ -26,8 +38,8 @@ body {
     justify-content: space-between;
     padding: 1em 2em;
     z-index: 1000;
-    font-family: 'Verdana', sans-serif; /* Changed font */
-    flex-wrap: wrap; /* Allow wrapping of items */
+    font-family: 'Verdana', sans-serif;
+    flex-wrap: wrap;
 }
 
 .navbar h1 {
@@ -40,8 +52,8 @@ body {
     margin: 0;
     padding: 0;
     display: flex;
-    gap: 1em; /* Adjust gap for better spacing */
-    flex-wrap: wrap; /* Allow wrapping of items */
+    gap: 1em;
+    flex-wrap: wrap;
 }
 
 .navbar li {
@@ -52,7 +64,19 @@ body {
     color: white;
     text-decoration: none;
     font-size: 18px;
-    white-space: nowrap; /* Prevent text from being cut off */
+    white-space: nowrap;
+    padding: 0.5em 1em;
+    border-radius: 5px; /* Add some rounding */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition for hover and active states */
+}
+
+.navbar a:hover {
+    background-color: var(--hover_color);
+}
+
+.navbar a:active,
+.navbar a.active {
+    background-color: var(--active_color);
 }
 
 .section {
@@ -61,23 +85,15 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding-top: 6em; /* To compensate for the fixed navbar */
+    padding-top: 6em;
 }
 
 h2 {
     margin-bottom: 1em;
     font-size: 2.5em;
     text-align: center;
-}
-
-P {
-    font-size: 18px;
-    line-height: 1.5;
-}
-
-.logo {
     width: 100%;
-    height: 100%;
+    padding-top: 1em; /* Ensure the title is at the top */
 }
 
 .table_holder_top, .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
@@ -96,25 +112,18 @@ P {
     align-items: flex-start;
     width: 80%;
     flex-wrap: wrap;
-    text-align: justify;
 }
 
 .left {
     width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .right {
     width: 45%;
     padding-left: 5%;
-}
-
-#overview_text {
-    width: 60%;
-    padding: 0;
-}
-#logo_holder {
-    width: 40%;
-    padding: 0;
 }
 
 .dropdown-holder {
@@ -148,11 +157,38 @@ P {
     margin-top: 2em;
 }
 
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1em;
+}
+
+th, td {
+    border: 1px solid var(--light_gray);
+    padding: 0.75em;
+    text-align: center;
+}
+
+th {
+    background-color: var(--light_blue);
+    color: white;
+    font-weight: bold;
+}
+
+td {
+    background-color: white;
+}
+
+tr:hover td {
+    background-color: var(--pale_blue);
+}
+
 /* Responsive Styles */
 @media (max-width: 800px) {
     .content {
-        flex-direction: column; /* Stack content vertically */
-        align-items: center; /* Center align the content */
+        flex-direction: column;
+        align-items: center;
     }
 
     .left, .right {
@@ -161,7 +197,7 @@ P {
     }
 
     .right {
-        margin-top: 2em; /* Add some space between sections */
+        margin-top: 2em;
     }
 
     .dropdown-holder {
