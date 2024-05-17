@@ -87,7 +87,7 @@ def create_layout():
                         children=html.Div(id="power_rank_graph_loader"),
                         className="custom-loading"
                     ),
-                ], className="left"),
+                ]),
             ])
         ]),
 
@@ -115,8 +115,9 @@ def create_layout():
 
         html.Div(id="playoff-probability", className="section", children=[
             html.H2("Playoff Probability"),
-            html.Div(className="content", children=[
+            html.Div(children=[
                 html.Div([
+
                     dcc.Loading(
                         id="loading-2",
                         type="default",
@@ -124,9 +125,9 @@ def create_layout():
                         className="custom-loading"
                     ),
                     html.Div(id="loading_message", children=[
-                        html.H3(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
+                        html.H4(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
                     ]),
-                ], className="left"),
+                ]),
             ])
         ]),
     ])

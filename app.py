@@ -102,7 +102,7 @@ def create_power_rank(standings_JSON, game_results_JSON):
             'displayModeBar': False,  # Hides the mode bar
             'staticPlot': False,  # Allows hover effects but prevents zooming
         },
-        style={'height': '33vh', 'margin-top': '1vh', 'margin-bottom': '1vh', 'margin-left': '1vw', 'margin-right': '1vw'}
+        style={'height': '60vh', 'width': '80vw', 'margin': '5vh 12.5vw 10vh 7.5vw'}
     ), power_rank_JSON
 
 
@@ -153,7 +153,7 @@ def create_playoff_prob_1(future_games_JSON, standings_JSON, power_rank_JSON):
             'displayModeBar': False,  # Hides the mode bar
             'staticPlot': False,  # Allows hover effects but prevents zooming
         },
-        style={'height': '33vh', 'margin-top': '1vh', 'margin-bottom': '1vh', 'margin-left': '1vw', 'margin-right': '1vw'}
+        style={'height': '60vh', 'width': '80vw', 'margin': '5vh 12.5vw 10vh 7.5vw'}
     ), {'display': 'none'}
 
 
