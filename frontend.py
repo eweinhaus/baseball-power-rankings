@@ -87,7 +87,7 @@ def create_layout():
                         children=html.Div(id="power_rank_graph_loader"),
                         className="custom-loading"
                     ),
-                ]),
+                ], className = "graph-box"),
             ])
         ]),
 
@@ -109,7 +109,7 @@ def create_layout():
                         html.Div(id='away_win_prob', className="win-prob"),
                         html.Div(id='home_win_prob', className="win-prob"),
                     ]),
-                ], className="left"),
+                ], className="box"),
             ])
         ]),
 
@@ -117,7 +117,6 @@ def create_layout():
             html.H2("Playoff Probability"),
             html.Div(children=[
                 html.Div([
-
                     dcc.Loading(
                         id="loading-2",
                         type="default",
@@ -127,8 +126,8 @@ def create_layout():
                     html.Div(id="loading_message", children=[
                         html.H4(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
                     ]),
-                ]),
-            ])
+                ],  className = "graph-box"),
+            ], className="content"),
         ]),
     ])
 
@@ -136,4 +135,4 @@ app = dash.Dash(__name__)
 app.layout = create_layout()
 
 if __name__ == "__main__":
-    app.run_server(debug=True)
+    app.run_server(debug=False)

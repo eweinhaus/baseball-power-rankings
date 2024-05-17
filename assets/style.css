@@ -25,7 +25,7 @@ body {
     padding: 0;
 }
 
-p {
+p not:overview-text{
     font-size: 1em;
     line-height: 1.25;
     text-align: justify;
@@ -50,14 +50,15 @@ p {
     margin: 0;
     font-size: 24px;
     padding: 0.75em;
+    font-weight: bold;
 }
 
 .navbar ul {
     list-style-type: none;
     margin: 0;
-    padding: 1.5em;
+    padding: 1.5em 0.5em;
     display: flex;
-    gap: 1em;
+    gap: 0em;
     flex-wrap: wrap;
 }
 
@@ -89,11 +90,12 @@ h3 {
 }
 
 h4 {
+    margin: 175px 10px;
     text-align: center;
 }
 
 .custom-loading {
-    margin-top: 75px;
+    margin-top: 275px;
 }
 
 .overview-page {
@@ -112,14 +114,11 @@ h4 {
 }
 
 .overview-text {
-    width: 65%;
+    width: 60%;
     text-align: center;
-    margin-bottom: 1em;
-    padding: 2%;
-    margin-bottom: 3%;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    padding: none;
+    margin: 0px 5% 5% 5%;
+    font-size: large;
 }
 
 .middle-row, .bottom-row {
@@ -138,12 +137,22 @@ h4 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.graph-box {
+    width: 90%;
+    margin: 5% 2.5%;
+    padding: 1em;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+
 .box h3 {
     margin-top: 0;
 }
 
 .section {
-    min-height: 100vh;
+    min-height: 90vh;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -173,14 +182,12 @@ h4 {
 
 h2 {
     margin-bottom: 1em;
-    font-size: 2.5em;
+    font-size: 2.25em;
     text-align: center;
     padding: 0.5em 1em;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     color: var(--dark_blue);
-    max-width: 80%;
+    font-weight: bold;
+
 }
 
 .table_holder_top, .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
@@ -259,6 +266,10 @@ table {
     border-collapse: collapse;
 }
 
+.points-column {
+    font-weight: bold;
+}
+
 th, td {
     border: none;
     padding: 0.5em;
@@ -280,7 +291,25 @@ tr:hover td {
 }
 
 /* Responsive Styles */
-@media (max-width: 800px) {
+@media (max-width: 1200px) {
+    .navbar ul {
+        padding: 1.5em;
+    }
+
+    .navbar h1 {
+        padding-top: 1em;
+        font-size: 20px;
+    }
+    
+    .navbar a {
+        font-size: 15px;
+        white-space: nowrap;
+        padding: 0.5em 0.75em;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 950px) {
     .navbar ul {
         flex-direction: column;
         width: 100%;
@@ -289,7 +318,7 @@ tr:hover td {
         max-height: 0;
         overflow: hidden;
         transition: opacity 0.3s ease, max-height 0.3s ease;
-        padding: 0.25em;
+        padding: 0.5em;
     }
     
     .navbar:hover ul {
@@ -314,6 +343,13 @@ tr:hover td {
 
     .navbar a:last-child {
         border-bottom: none;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 750px) {
+    .overview-text {
+        width: 90%;
     }
 
     .content {
@@ -341,6 +377,8 @@ tr:hover td {
 
     .dropdown {
         width: 80%;
+        padding: 1% 10%;
+        margin: 0;
         margin-bottom: 1em;
     }
 
@@ -349,8 +387,10 @@ tr:hover td {
     }
 
     .win-prob {
-        width: 80%;
-        margin: 1em;
+        max-width: 20%;
+        padding-left: 40%;
+        padding-right: 40%;
+        margin-bottom: 1em;
     }
 
     .middle-row, .bottom-row {

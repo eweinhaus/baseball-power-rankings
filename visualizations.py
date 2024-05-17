@@ -4,22 +4,28 @@ import ipdb
 
 def create_standings_table(standings_df):
     table_df = standings_df.copy()
-    #Change column names
+    # Change column names
     table_df['RF'] = table_df['RunsFor']
     table_df['RA'] = table_df['RunsAgainst']
     table_df['GP'] = table_df['GamesPlayed']
-    table_df = table_df.drop(columns = ['RunsFor', 'RunsAgainst', 'GamesPlayed'])
-    
+    table_df = table_df.drop(columns=['RunsFor', 'RunsAgainst', 'GamesPlayed'])
 
     standings_table = html.Table(
         # Header
         [html.Tr([html.Th(col) for col in table_df.columns])] +
 
         # Body
-        [html.Tr([html.Td(table_df.iloc[i][col]) for col in table_df.columns]) for i in range(len(table_df))]
+        [
+            html.Tr([
+                html.Td(table_df.iloc[i][col], className='points-column' if col == 'Points' else '') 
+                for col in table_df.columns
+            ]) 
+            for i in range(len(table_df))
+        ]
     )
 
     return standings_table
+
 
 def create_power_rank_graph(power_rank_df):
     # Format data
