@@ -1,6 +1,6 @@
-Deployed to: https://dash-playoff-odds.onrender.com/
-
 Dash Web App that gets the live updating scores and schedule from Boston Men's Amateur Baseball League website and creates: Standings, Power Rankings, Single Game Win Probability, and Playoff Probability.
+
+Deployed to: https://dash-playoff-odds.onrender.com/
 
 **1. Standings:**
 Uses webcrawler to grab outcome of each game and create league standings updated to the minute.
@@ -28,11 +28,6 @@ Utilizes Dash callbacks in order to allow user to input any potential matchup an
 
 
 **4. Playoff Probability:**
-Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to simulate the rest of the season 1000 times and graphs the probability that each team finishes top 5 in the standings in order to make the league playoffs.
-
-
-
-
-Note: Because the 2023 season has already been completed and there are no games left to play, app grabs only the first 30 games of the league season for its data and makes all calculations and predictions from that point. When the 2024 season begins, it will be grab live data for that season, and make all calculations and predictions live.
+Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season 1500 times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.
 
 

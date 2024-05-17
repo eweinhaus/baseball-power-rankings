@@ -17,7 +17,7 @@ def sim_one_season(standings_dict, future_prob_df):
     
     return sorted_teams[:constants.NUM_PLAYOFF_TEAMS]
 
-def sim_remaining_games(standings_df, future_prob_df):
+def sim_remaining_games(standings_df, future_prob_df, num_sims):
     # Convert standings DataFrame to a dictionary for faster access
     standings_dict = dict(zip(standings_df["Team"], standings_df["Points"]))
     
@@ -25,9 +25,9 @@ def sim_remaining_games(standings_df, future_prob_df):
     outcomes_dict = defaultdict(int)
 
     # Simulate seasons
-    for i in range(constants.NUM_SIMULATIONS):
+    for i in range(num_sims):
         if i % 100 == 0:
-            print("Simulating season", i + 1, "of", constants.NUM_SIMULATIONS)
+            print("Simulating season", i + 1, "of", num_sims)
         playoff_teams = sim_one_season(standings_dict, future_prob_df)
         for team in playoff_teams:
             outcomes_dict[team] += 1
@@ -37,7 +37,7 @@ def sim_remaining_games(standings_df, future_prob_df):
     # Convert outcomes to DataFrame
     outcomes_df = pd.DataFrame({'Team': list(outcomes_dict.keys()), 
                                 'Made Playoffs': list(outcomes_dict.values())})
-    outcomes_df['Playoff Probability'] = outcomes_df['Made Playoffs'] / constants.NUM_SIMULATIONS
+    outcomes_df['Playoff Probability'] = outcomes_df['Made Playoffs'] / num_sims
     outcomes_df = outcomes_df.sort_values(by='Playoff Probability', ascending=False)
     
     
