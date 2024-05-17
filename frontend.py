@@ -18,6 +18,7 @@ def create_layout():
         html.Nav(
             className="navbar",
             children=[
+                #html.Img(src="/assets/BMBL_Logo.png", className="left"),
                 html.H1("BMBL Playoff Predictor"),
                 html.Ul([
                     html.Li(html.A("Overview", href="#overview")),
@@ -29,33 +30,50 @@ def create_layout():
             ]
         ),
 
-        html.Div(id="overview", className="section", children=[
+
+        
+        html.Div(id="overview", className='overview-page', children=[
             html.H2("Overview"),
-            html.Div(className="content", children=[
-                html.Img(src="/assets/BMBL_Logo.png", className="left", id = "left1"),
-                html.Div(className="right", id = "right1", children=[
-                    html.P([
-                        "This Dash app is a live updating tool that predicts the playoff chances of each team in the Boston Metro Baseball League. ",
-                        "The app crawls the league website to get the results of all games played so far this season. ",
-                        "It then uses these results to calculate the current standings and power rankings of each team. ",
-                        "From there it creates a Monte Carlo simulation to simulate the remainder of the season a specified number of times. ",
-                        "The app then calculates the playoff chances of each team based on the results of the simulations. ",
-                        html.A("See more here", href="https://github.com/eweinhaus/baseball-power-rankings/blob/main/README.md", target="_blank"),
-                        "."
-                    ])
-                ])
-            ])
+            html.Div([
+                html.P([
+                    "A live updating tool used to predict the playoff chances of each team in the Boston Metro Baseball League. ",
+                    html.A("See more here", href="https://github.com/eweinhaus/baseball-power-rankings/blob/main/README.md", target="_blank"),
+                    "."
+                ]),
+            ], className='overview-text'),
+
+            html.Div([
+                html.Div([
+                    html.H3("Standings"),
+                    html.P(["Live updated standings from the league website",])
+                ], className='box', id='standings-box'),
+
+                html.Div([
+                    html.H3("Power Rankings"),
+                    html.P("Showing each team's expected win probability vs. a league average team")
+                ], className='box', id='power-rankings-box'),
+            ], className='middle-row'),
+
+            html.Div([
+                html.Div([
+                    html.H3("Win Probability"),
+                    html.P("Interactive tool to predict win probablity for user specified matchups")
+                ], className='box', id='win-probability-box'),
+
+                html.Div([
+                    html.H3("Playoff Odds"),
+                    html.P(f"Simulates the rest of the season {num_sims} times to predict live playoff odds"),
+                ], className='box', id='playoff-odds-box'),
+            ], className='bottom-row')
         ]),
+
 
         html.Div(id="standings", className="section", children=[
             html.H2("Standings"),
             html.Div(className="content", children=[
-                html.Div(className="left", children=[
-                    html.P(["This page uses a webcrawler to grab outcome of each game from the league website and create live league standings, updated automatically. "])
-                ]),
                 html.Div([
                     html.Table(id="standings_table"),
-                ], className="right"),
+                ], className="box"),
             ])
         ]),
 
@@ -70,9 +88,6 @@ def create_layout():
                         className="custom-loading"
                     ),
                 ], className="left"),
-                html.Div(className="right", children=[
-                    html.P("The power rankings page takes each team's performance thus far (Runs Scored, Runs Allowed, and Games Played) and applies Bill James' Pythagorean Win Probability formula to estimate each team's expected win percentage vs. a league average team. It then uses a derivative of Tangotigers win probability forumla, factors in each team's home field advantage and strength of schedule into pythagorean win percentage in order to get adjusted expected winning percentage, or 'Power Rank'.")
-                ])
             ])
         ]),
 
@@ -95,9 +110,6 @@ def create_layout():
                         html.Div(id='home_win_prob', className="win-prob"),
                     ]),
                 ], className="left"),
-                html.Div(className="right", children=[
-                    html.P("This page applies Tangotiger's win probability formula to each team's power rank in order to estimate the percentage chance any given home team beats any given away team in a potential matchup. It utilizes Dash callbacks in order to allow user to input any potential matchup and estimate outcome in real time.")
-                ])
             ])
         ]),
 
@@ -115,9 +127,6 @@ def create_layout():
                         html.H3(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
                     ]),
                 ], className="left"),
-                html.Div(className="right", children=[
-                    html.P(f"Given current standings, power rankings, individual matchup win probability, and remaining schedule, app uses Pandas and Numpy to run a Monte Carlo simulation to simulate the rest of the season {num_sims} times and graphs the probability that each team finishes top 6 in the standings in order to make the league playoffs.")
-                ])
             ])
         ]),
     ])
