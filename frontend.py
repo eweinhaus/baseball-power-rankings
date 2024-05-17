@@ -43,27 +43,27 @@ def create_layout():
             ], className='overview-text'),
 
             html.Div([
-                html.Div([
+                html.A([
                     html.H3("Standings"),
                     html.P(["Live updated standings from the league website",])
-                ], className='box', id='standings-box'),
+                ], className='box', id='standings-box', href="#standings"),
 
-                html.Div([
+                html.A([
                     html.H3("Power Rankings"),
                     html.P("Showing each team's expected win probability vs. a league average team")
-                ], className='box', id='power-rankings-box'),
+                ], className='box', id='power-rankings-box', href="#power-rankings"),
             ], className='middle-row'),
 
             html.Div([
-                html.Div([
+                html.A([
                     html.H3("Win Probability"),
                     html.P("Interactive tool to predict win probablity for user specified matchups")
-                ], className='box', id='win-probability-box'),
+                ], className='box', id='win-probability-box', href="#win-probability"),
 
-                html.Div([
+                html.A([
                     html.H3("Playoff Odds"),
                     html.P(f"Simulates the rest of the season {num_sims} times to predict live playoff odds"),
-                ], className='box', id='playoff-odds-box'),
+                ], className='box', id='playoff-odds-box', href="#playoff-probability"),
             ], className='bottom-row')
         ]),
 

@@ -25,11 +25,30 @@ body {
     padding: 0;
 }
 
+a {
+    color: inherit; /* Use the text color of the parent element */
+    text-decoration: none; /* Remove underline */
+    font-weight: inherit; /* Inherit font weight from parent */
+    font-size: inherit; /* Inherit font size from parent */
+    font-style: inherit; /* Inherit font style from parent */
+    line-height: inherit; /* Inherit line height from parent */
+}
+
+
 p not:overview-text{
     font-size: 1em;
     line-height: 1.25;
     text-align: justify;
 }
+
+p > a {
+    color: red;
+}
+
+p > a:hover {
+    text-decoration: underline;
+}
+
 
 .navbar {
     width: 100%;
@@ -135,6 +154,16 @@ h4 {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#standings-box:hover, #power-rankings-box:hover, #win-probability-box:hover, #playoff-odds-box:hover{
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.6);
+    background-color: var(--light_gray);
+    transition: 0.25s ease-in-out;
+}
+
+#standings-box, #power-rankings-box, #win-probability-box, #playoff-odds-box {
+    transition: 0.25s ease-in-out;
 }
 
 .graph-box {
