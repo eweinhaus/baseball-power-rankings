@@ -190,14 +190,6 @@ h2 {
 
 }
 
-.table_holder_top, .table_holder_1, .table_holder_2, .table_holder_3, .table_holder_4 {
-    padding: 2em;
-    background-color: none;
-    border-radius: 8px;
-    max-width: 80%;
-    overflow: none;
-}
-
 .content {
     display: flex;
     justify-content: space-between;
@@ -205,33 +197,6 @@ h2 {
     margin: 0 auto;
 }
 
-.left {
-    width: 100%;
-    padding: 2.5%;
-}
-
-.right {
-    width: 40%;
-    padding: 2.5%;
-}
-
-.left, .right {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-    margin: 2.5%;
-    background-color: white;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-#left1 {
-    width: 20%;
-}
-
-#right1 {
-    width: 60%;
-}
 
 .dropdown-holder {
     display: flex;
@@ -264,6 +229,7 @@ h2 {
 table {
     width: 100%;
     border-collapse: collapse;
+    font-size: medium;
 }
 
 .points-column {
@@ -348,6 +314,10 @@ tr:hover td {
     .navbar a:last-child {
         border-bottom: none;
     }
+
+    table {
+        font-size: small;
+    }
 }
 
 /* Responsive Styles */
@@ -360,19 +330,6 @@ tr:hover td {
         flex-direction: column;
         align-items: center;
         width: 95%;
-    }
-
-    #left1, #right1 {
-        width: 90%;
-    }
-
-    .left, .right {
-        width: 80%;
-        padding: 2.5%;
-    }
-
-    .right {
-        margin-top: 1em;
     }
 
     .dropdown-holder {
@@ -405,6 +362,6 @@ tr:hover td {
 
     .box {
         width: 90%;
-        margin: 1em 5%;
+        margin: 0.5em 5%;
     }
 }

@@ -18,7 +18,7 @@ def create_layout():
         html.Nav(
             className="navbar",
             children=[
-                #html.Img(src="/assets/BMBL_Logo.png", className="left"),
+                #html.Img(src="/assets/BMBL_Logo.png"),
                 html.H1("BMBL Playoff Predictor"),
                 html.Ul([
                     html.Li(html.A("Overview", href="#overview")),
