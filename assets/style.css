@@ -327,12 +327,16 @@ tr:hover td {
         max-height: 250px;
         padding: 1.5em;
     }
+
+    .navbar h1 {
+        padding-top: 1.25em;
+    }
     
 
     .navbar li {
         display: block;
         width: 100%;
-        padding: 5px;
+        padding: 10px;
         text-align: center;
     }
 
