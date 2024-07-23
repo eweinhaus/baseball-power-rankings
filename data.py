@@ -169,9 +169,16 @@ def get_power_rank(power_rank_df, game_results_df):
     return power_rank_df
 
 def regress_to_mean(row, team_estimated_win_pct):
+    #Include last year power rank
     last_year_power_rank = (constants.LAST_YEAR_POWR_RANK[row["Team"]] / 100) * constants.REGRESS_LAST_YEAR
+    
+    #Include games of .500 ball
     average = 0.5 * constants.REGRESS_500_GAMES
+    
+    #Include pythag win% adjusted for SoS and HFA
     estimated =  team_estimated_win_pct * row["GamesPlayed"] * constants.REGRESS_ESTIMATED
+
+    #Include straight pythag win%
     pythag = row["Pythagorean Win Percentage"] * row["GamesPlayed"] * constants.REGRESS_PYTHAG
 
     return (average + estimated + pythag + last_year_power_rank) / (constants.REGRESS_LAST_YEAR + constants.REGRESS_500_GAMES + (row["GamesPlayed"] * (constants.REGRESS_ESTIMATED + constants.REGRESS_PYTHAG)))
