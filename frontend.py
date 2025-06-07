@@ -15,119 +15,67 @@ def create_layout():
         dcc.Store(id="adj_standings_JSON"),
         dcc.Store(id="power_rank_JSON"),
 
-        html.Nav(
-            className="navbar",
-            children=[
-                #html.Img(src="/assets/BMBL_Logo.png"),
-                html.H1("BMBL Playoff Predictor"),
-                html.Ul([
-                    html.Li(html.A("Overview", href="#overview")),
-                    html.Li(html.A("Standings", href="#standings")),
-                    html.Li(html.A("Power Rankings", href="#power-rankings")),
-                    html.Li(html.A("Win Probability", href="#win-probability")),
-                    html.Li(html.A("Playoff Odds", href="#playoff-probability")),
-                ])
-            ]
-        ),
-
-
-        
-        html.Div(id="overview", className='overview-page', children=[
-            html.H2("Overview"),
-            html.Div([
+        html.Header(className="dashboard-header", children=[
+            html.H1("BMBL Playoff Predictor"),
+            html.Div(className="header-description", children=[
                 html.P([
                     "A live updating tool used to predict the playoff chances of each team in the Boston Metro Baseball League. ",
                     html.A("See more here", href="https://github.com/eweinhaus/baseball-power-rankings/blob/main/README.md", target="_blank"),
                     "."
                 ]),
-            ], className='overview-text'),
-
-            html.Div([
-                html.A([
-                    html.H3("Standings"),
-                    html.P(["Live updated standings from the league website",])
-                ], className='box', id='standings-box', href="#standings"),
-
-                html.A([
-                    html.H3("Power Rankings"),
-                    html.P("Showing each team's expected win probability vs. a league average team")
-                ], className='box', id='power-rankings-box', href="#power-rankings"),
-            ], className='middle-row'),
-
-            html.Div([
-                html.A([
-                    html.H3("Win Probability"),
-                    html.P("Interactive tool to predict win probablity for user specified matchups")
-                ], className='box', id='win-probability-box', href="#win-probability"),
-
-                html.A([
-                    html.H3("Playoff Odds"),
-                    html.P(f"Simulates the rest of the season {num_sims} times to predict live playoff odds"),
-                ], className='box', id='playoff-odds-box', href="#playoff-probability"),
-            ], className='bottom-row')
+            ]),
         ]),
 
+        html.Div(className="dashboard", children=[
+            # Standings Section
+            html.Div(className="dashboard-section", children=[
+                html.H2("Standings"),
+                html.Table(id="standings_table"),
+            ]),
 
-        html.Div(id="standings", className="section", children=[
-            html.H2("Standings"),
-            html.Div(className="content", children=[
-                html.Div([
-                    html.Table(id="standings_table"),
-                ], className="box"),
-            ])
-        ]),
+            # Power Rankings Section
+            html.Div(className="dashboard-section", children=[
+                html.H2("Power Rankings"),
+                dcc.Loading(
+                    id="loading-1",
+                    type="default",
+                    children=html.Div(id="power_rank_graph_loader"),
+                    className="custom-loading"
+                ),
+            ]),
 
-        html.Div(id="power-rankings", className="section", children=[
-            html.H2("Power Rankings"),
-            html.Div(className="content", children=[
-                html.Div([
-                    dcc.Loading(
-                        id="loading-1",
-                        type="default",
-                        children=html.Div(id="power_rank_graph_loader"),
-                        className="custom-loading"
-                    ),
-                ], className = "graph-box"),
-            ])
-        ]),
-
-        html.Div(id="win-probability", className="section", children=[
-            html.H2("Single Game Win Probability"),
-            html.Div(className="content", children=[
-                html.Div([
-                    html.Div(className="dropdown-holder", children=[
-                        html.Div(className="dropdown", children=[
-                            html.H3("Away Team"),
-                            dcc.Dropdown(id='away_team_dropdown'),
-                        ]),
-                        html.Div(className="dropdown", children=[
-                            html.H3("Home Team"),
-                            dcc.Dropdown(id='home_team_dropdown'),
-                        ]),
+            # Win Probability Section
+            html.Div(className="dashboard-section", children=[
+                html.H2("Single Game Win Probability"),
+                html.Div(className="dropdown-holder", children=[
+                    html.Div(className="dropdown", children=[
+                        html.H3("Away Team"),
+                        dcc.Dropdown(id='away_team_dropdown'),
                     ]),
-                    html.Div(className="win-prob-holder", children=[
-                        html.Div(id='away_win_prob', className="win-prob"),
-                        html.Div(id='home_win_prob', className="win-prob"),
+                    html.Div(className="dropdown", children=[
+                        html.H3("Home Team"),
+                        dcc.Dropdown(id='home_team_dropdown'),
                     ]),
-                ], className="box"),
-            ])
-        ]),
+                ]),
+                html.Div(className="win-prob-holder", children=[
+                    html.Div(id='away_win_prob', className="win-prob"),
+                    html.Div(id='home_win_prob', className="win-prob"),
+                ]),
+            ]),
 
-        html.Div(id="playoff-probability", className="section", children=[
-            html.H2("Playoff Probability"),
-            html.Div(children=[
-                html.Div([
-                    dcc.Loading(
-                        id="loading-2",
-                        type="default",
-                        children=html.Div(id="playoff_graph_loader"),
-                        className="custom-loading"
-                    ),
-                    html.Div(id="loading_message", children=[
-                        html.H4(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
-                    ]),
-                ],  className = "graph-box"),
-            ], className="content"),
+            # Playoff Probability Section
+            html.Div(className="dashboard-section", children=[
+                html.H2("Playoff Probability"),
+                dcc.Loading(
+                    id="loading-2",
+                    type="default",
+                    children=html.Div(id="playoff_graph_loader"),
+                    className="custom-loading"
+                ),
+                html.Div(id="loading_message", children=[
+                    html.H4(f"Simulating remainder of season {num_sims} times. This may take a minute..."),
+                ]),
+            ]),
         ]),
     ])
 

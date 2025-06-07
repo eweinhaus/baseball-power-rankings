@@ -21,7 +21,8 @@ def create_standings_table(standings_df):
                 for col in table_df.columns
             ]) 
             for i in range(len(table_df))
-        ]
+        ],
+        className='standings-table'
     )
 
     return standings_table
@@ -30,7 +31,6 @@ def create_standings_table(standings_df):
 def create_power_rank_graph(power_rank_df):
     # Format data
     new_power_rank_df = power_rank_df.copy()
-    new_power_rank_df['TeamNickname'] = new_power_rank_df['Team'].map(lambda x: x.split()[-1])
     new_power_rank_df['PowerRank'] = new_power_rank_df['Power Rank'].map(lambda x: "{:.1f}".format(x*100))
 
     # Define hover text
@@ -38,40 +38,51 @@ def create_power_rank_graph(power_rank_df):
 
     # Define data for the graph
     data = [{
-        'x': new_power_rank_df['TeamNickname'],
+        'x': new_power_rank_df['Team'],
         'y': new_power_rank_df['PowerRank'],
-        'yaxis': {'range': [0, 120]},
         'type': 'bar',
         'name': 'Power Rank',
-        'text': hover_text,  # Set hover text
-        'hoverinfo': 'text',  # Show only hover text
+        'text': hover_text,
+        'hoverinfo': 'text',
         'textposition': 'none',
         'marker': {
-            'color': [constants.TEAM_COLORS[team][0] for team in new_power_rank_df['Team']],  # Apply team colors (fill color)
+            'color': [constants.TEAM_COLORS[team][0] for team in new_power_rank_df['Team']],
             'line': {
-                'color': [constants.TEAM_COLORS[team][1] for team in new_power_rank_df['Team']],  # Apply border color
-                'width': 6  # Border width
+                'color': [constants.TEAM_COLORS[team][1] for team in new_power_rank_df['Team']],
+                'width': 1
             }
         }
     }]
 
     # Define layout for the graph
     layout = {
-        'yaxis': {'title': 'Power Rank', 'range': [0, 105]},
+        'yaxis': {
+            'title': 'Power Rank',
+            'range': [0, 105],
+            'tickfont': {'size': 9},
+            'titlefont': {'size': 11},
+            'automargin': True
+        },
+        'xaxis': {
+            'tickangle': -45,
+            'tickfont': {'size': 9},
+            'automargin': True
+        },
         'showlegend': False,
-        'dragmode': False,  # Disable zoom by click-and-drag
-        'margin': {'t': 0, 'b': 40, 'l': 50, 'r': 22.5},
-        'plot_bgcolor': 'rgba(0, 0, 0, 0)',  # Transparent plot background
-        'paper_bgcolor': 'rgba(0, 0, 0, 0)',  # Transparent paper background
+        'dragmode': False,
+        'margin': {'t': 5, 'b': 35, 'l': 45, 'r': 15},
+        'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+        'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+        'height': 180,
+        'width': '100%',
+        'autosize': True
     }
 
-    # Return the figure object with layout and configuration to disable interaction
     return {'data': data, 'layout': layout}
 
 
 def create_playoff_graph(playoff_prob_df):
     # Format data
-    playoff_prob_df['TeamNickname'] = playoff_prob_df['Team'].map(lambda x: x.split()[-1])
     playoff_prob_df['Playoff Probability'] = playoff_prob_df['Playoff Probability'].map(lambda x: "{:.1f}%".format(x * 100))
 
     # Define hover text
@@ -79,32 +90,44 @@ def create_playoff_graph(playoff_prob_df):
 
     # Define data for the graph
     data = [{
-        'x': playoff_prob_df['TeamNickname'],
+        'x': playoff_prob_df['Team'],
         'y': playoff_prob_df['Playoff Probability'],
-        'yaxis': {'range': [0, 105]},
         'type': 'bar',
         'name': 'Playoff Probability',
-        'text': hover_text,  # Set hover text
-        'hoverinfo': 'text',  # Show only hover text
+        'text': hover_text,
+        'hoverinfo': 'text',
         'textposition': 'none',
         'marker': {
-            'color': [constants.TEAM_COLORS[team][0] for team in playoff_prob_df['Team']],  # Apply team colors (fill color)
+            'color': [constants.TEAM_COLORS[team][0] for team in playoff_prob_df['Team']],
             'line': {
-                'color': [constants.TEAM_COLORS[team][1] for team in playoff_prob_df['Team']],  # Apply border color
-                'width': 6  # Border width
+                'color': [constants.TEAM_COLORS[team][1] for team in playoff_prob_df['Team']],
+                'width': 1
             }
         }
     }]
 
     # Define layout for the graph
     layout = {
-        'yaxis': {'title': 'Probability (%)', 'range': [0, 105]},
+        'yaxis': {
+            'title': 'Probability (%)',
+            'range': [0, 105],
+            'tickfont': {'size': 9},
+            'titlefont': {'size': 11},
+            'automargin': True
+        },
+        'xaxis': {
+            'tickangle': -45,
+            'tickfont': {'size': 9},
+            'automargin': True
+        },
         'showlegend': False,
-        'dragmode': False,  # Disable zoom by click-and-drag
-        'margin': {'t': 0, 'b': 40, 'l': 50, 'r': 22.5},
-        'plot_bgcolor': 'rgba(0, 0, 0, 0)',  # Transparent plot background
-        'paper_bgcolor': 'rgba(0, 0, 0, 0)',  # Transparent paper background
+        'dragmode': False,
+        'margin': {'t': 5, 'b': 35, 'l': 45, 'r': 15},
+        'plot_bgcolor': 'rgba(0, 0, 0, 0)',
+        'paper_bgcolor': 'rgba(0, 0, 0, 0)',
+        'height': 180,
+        'width': '100%',
+        'autosize': True
     }
 
-    # Return the figure object with layout and configuration to disable interaction
     return {'data': data, 'layout': layout}

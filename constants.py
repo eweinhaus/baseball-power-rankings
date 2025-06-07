@@ -1,8 +1,10 @@
 #URLS
-SCHEDULE_URL = 'https://www.400hitter.com/schedule.asp?SeID=364&m=506&show_team=0&show_ump=0&TmID=&CtID=0'
-STANDINGS_URL = 'https://www.400hitter.com/standings.asp?SeID=364&CtID=0'
+SEASON_ID = 377
+SCHEDULE_URL = f'https://www.400hitter.com/schedule.asp?SeID={SEASON_ID}&m=506&show_team=0&show_ump=0&TmID=&CtID=0'
+STANDINGS_URL = f'https://www.400hitter.com/standings.asp?SeID={SEASON_ID}&CtID=0'
 LAST_UPDATE = "****"
-#Codes (Between 'SeID=' and '&m=50' in URLs):
+#Season IDs:
+#BMBL 2025: 377
 #BMBL 2024: 364
 #BMBL 2023: 353
 
@@ -19,24 +21,25 @@ NUM_SIMULATIONS = 1250
 NUM_PLAYOFF_TEAMS = 6
 
 #League Factors
-END_OF_SEASON = True
+END_OF_SEASON = False
 PRESEASON = False
 REGRESS_TO_MEAN = True
 REGRESS_500_GAMES = 0.25
 REGRESS_ESTIMATED = 1.2
 REGRESS_PYTHAG = 0.2
 REGRESS_LAST_YEAR = 0.1
-LAST_YEAR_POWR_RANK = {'Merrimack Valley Marlins': 85.8,
-    'Norfolk County Mariners': 61.9,
-    'Middleboro Mocka Rays': 72.9,
-    'South Shore Giants': 65,
-    'Waltham Cutters': 62.1,
-    'Granite State Rockies' : 35.8,
-    'Boston Hogs': 42.5,
-    'Greater Boston Bandits': 32,
-    'Boston Phoenix': 45,
-    'Weymouth Black Sox': 25.0,
-    'Bay State Raiders': 30,
+LAST_YEAR_POWR_RANK = {'Merrimack Valley Marlins': 71.4,
+    'Norfolk County Mariners': 66.8,
+    'Middleboro Mocka Rays': 82.3,
+    'South Shore Giants': 42.0,
+    'Waltham Cutters': 43.4,
+    'Granite State Rockies' : 35.0,
+    'Boston Hogs': 59.2,
+    'Greater Boston Bandits': 43.3,
+    'Boston Phoenix': 52.2,
+    'Weymouth Black Sox': 32.8,
+    'Bay State Raiders': 26.1,
+    #'Malden Marlins': 80,
 }
 
 
@@ -65,5 +68,7 @@ TEAM_COLORS = {
     'Greater Boston Bandits': ['black', '#EC3940'],
     'Boston Phoenix': ['#EBA53E', '#E93F32'],
     'Weymouth Black Sox': ['#090909', '#090909'],
-    'Bay State Raiders': ['#2C5E1B', '#2C5E1B']
+    'Bay State Raiders': ['#2C5E1B', '#2C5E1B'],
+    'Malden Marlins': ['#FFFFFF', '#000000']
+    
 }

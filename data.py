@@ -4,6 +4,7 @@ from dash import dcc, html, dash_table
 import constants
 
 def get_game_results_df(game_results):
+
     extracted_data = []
     for game in game_results:
         # Splitting at '@' to separate teams
@@ -169,8 +170,8 @@ def get_power_rank(power_rank_df, game_results_df):
     return power_rank_df
 
 def regress_to_mean(row, team_estimated_win_pct):
-    #Include last year power rank
-    last_year_power_rank = (constants.LAST_YEAR_POWR_RANK[row["Team"]] / 100) * constants.REGRESS_LAST_YEAR
+    #Include last year power rank (default to 0.5 if team not found)
+    last_year_power_rank = (constants.LAST_YEAR_POWR_RANK.get(row["Team"], 50) / 100) * constants.REGRESS_LAST_YEAR
     
     #Include games of .500 ball
     average = 0.5 * constants.REGRESS_500_GAMES
@@ -215,10 +216,10 @@ def get_single_game_win_prob(away_power_rank, home_power_rank):
 def get_team_dropdowns(power_rank_df):
     new_power_rank_df = power_rank_df.copy()
     
-    #Sort alphabetical by team
+    # Sort alphabetical by team name
     new_power_rank_df = new_power_rank_df.sort_values(by=["Team"], ascending=True)
 
-    #Create dropdown options
-    team_dropdown_options = [{'label': team, 'value': power_rank} for team, power_rank in zip(power_rank_df['Team'], power_rank_df['Power Rank'])]
+    # Create dropdown options using full team name as label
+    team_dropdown_options = [{'label': team, 'value': power_rank} for team, power_rank in zip(new_power_rank_df['Team'], new_power_rank_df['Power Rank'])]
 
     return team_dropdown_options
