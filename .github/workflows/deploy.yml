@@ -34,6 +34,9 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}
       run: |
+        # Mask sensitive information
+        echo "::add-mask::${{ steps.login-ecr.outputs.registry }}"
+        
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
@@ -44,6 +47,20 @@ jobs:
       run: |
         # Generate a random password for the database
         DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+        
+        # Mask the database password
+        echo "::add-mask::$DB_PASSWORD"
+        
+        # Check if template file exists
+        if [ ! -f "cloudformation-template.yaml" ]; then
+          echo "❌ CloudFormation template file not found!"
+          ls -la
+          exit 1
+        fi
+        
+        # Validate template
+        echo "🔍 Validating CloudFormation template..."
+        aws cloudformation validate-template --template-body file://cloudformation-template.yaml --region ${{ env.AWS_REGION }}
         
         # Check if stack exists and is in ROLLBACK_COMPLETE state
         STACK_STATUS=$(aws cloudformation describe-stacks --stack-name baseball-power-rankings-stack --region ${{ env.AWS_REGION }} --query 'Stacks[0].StackStatus' --output text 2>/dev/null || echo "STACK_NOT_FOUND")
@@ -56,6 +73,7 @@ jobs:
         fi
         
         # Deploy the stack
+        echo "🚀 Deploying CloudFormation stack..."
         aws cloudformation deploy \
           --template-file cloudformation-template.yaml \
           --stack-name baseball-power-rankings-stack \
