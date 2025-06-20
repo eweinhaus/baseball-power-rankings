@@ -68,27 +68,13 @@ fi
 
 echo "✅ Docker image pushed to ECR successfully"
 
-# Create database password secret if it doesn't exist
-echo "🔒 Setting up database password secret..."
-DB_PASSWORD=$(openssl rand -base64 32)
-aws secretsmanager create-secret \
-    --name production/db-password \
-    --description "Database password for baseball power rankings" \
-    --secret-string "{\"password\":\"$DB_PASSWORD\"}" \
-    --region $AWS_REGION 2>/dev/null || \
-aws secretsmanager update-secret \
-    --secret-id production/db-password \
-    --secret-string "{\"password\":\"$DB_PASSWORD\"}" \
-    --region $AWS_REGION
-
-echo "✅ Database password secret configured"
-
 # Deploy CloudFormation stack
 echo "☁️ Deploying CloudFormation stack..."
+DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
 aws cloudformation deploy \
     --template-file cloudformation-template.yaml \
     --stack-name $STACK_NAME \
-    --parameter-overrides Environment=production \
+    --parameter-overrides Environment=production DatabasePassword=$DB_PASSWORD \
     --capabilities CAPABILITY_NAMED_IAM \
     --region $AWS_REGION
 

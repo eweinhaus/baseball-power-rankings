@@ -12,6 +12,12 @@ Parameters:
     Default: 'production'
     Description: Environment name
 
+  DatabasePassword:
+    Type: String
+    NoEcho: true
+    Description: Password for the RDS database
+    Default: 'baseball123!'
+
 Resources:
   # VPC and Networking
   VPC:
@@ -160,7 +166,7 @@ Resources:
       AllocatedStorage: 20
       StorageType: gp2
       MasterUsername: admin
-      MasterUserPassword: !Sub '{{resolve:secretsmanager:${Environment}/db-password:SecretString:password}}'
+      MasterUserPassword: !Ref DatabasePassword
       DBSubnetGroupName: !Ref DBSubnetGroup
       VPCSecurityGroups:
         - !Ref DBSecurityGroup
@@ -168,6 +174,7 @@ Resources:
       MultiAZ: false
       PubliclyAccessible: false
       DeletionProtection: false
+      DBName: baseball_power_rankings
       Tags:
         - Key: Name
           Value: !Sub '${Environment}-baseball-power-rankings-db'
@@ -251,7 +258,7 @@ Resources:
               Protocol: tcp
           Environment:
             - Name: DATABASE_URL
-              Value: !Sub 'postgresql://admin:{{resolve:secretsmanager:${Environment}/db-password:SecretString:password}}@${Database.Endpoint.Address}:5432/baseball_power_rankings'
+              Value: !Sub 'postgresql://admin:${DatabasePassword}@${Database.Endpoint.Address}:5432/baseball_power_rankings'
             - Name: S3_BUCKET
               Value: !Ref StaticFilesBucket
           LogConfiguration:

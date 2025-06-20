@@ -40,26 +40,14 @@ jobs:
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
         echo "image=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG" >> $GITHUB_OUTPUT
 
-    - name: Create database password secret
-      run: |
-        # Generate a random password for the database
-        DB_PASSWORD=$(openssl rand -base64 32)
-        aws secretsmanager create-secret \
-          --name production/db-password \
-          --description "Database password for baseball power rankings" \
-          --secret-string "{\"password\":\"$DB_PASSWORD\"}" \
-          --region ${{ env.AWS_REGION }} || \
-        aws secretsmanager update-secret \
-          --secret-id production/db-password \
-          --secret-string "{\"password\":\"$DB_PASSWORD\"}" \
-          --region ${{ env.AWS_REGION }}
-
     - name: Deploy CloudFormation stack
       run: |
+        # Generate a random password for the database
+        DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
         aws cloudformation deploy \
           --template-file cloudformation-template.yaml \
           --stack-name baseball-power-rankings-stack \
-          --parameter-overrides Environment=production \
+          --parameter-overrides Environment=production DatabasePassword=$DB_PASSWORD \
           --capabilities CAPABILITY_NAMED_IAM \
           --region ${{ env.AWS_REGION }}
 
