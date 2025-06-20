@@ -2,6 +2,8 @@
 
 A web application for tracking and displaying baseball power rankings using Python, Dash, and AWS infrastructure.
 
+**🚀 CI/CD Pipeline Status: Ready for deployment!**
+
 ## Infrastructure
 
 This application is deployed using the following AWS services:
