@@ -214,7 +214,7 @@ Resources:
                   - s3:GetObject
                   - s3:PutObject
                   - s3:DeleteObject
-                Resource: !Sub '${StaticFilesBucket}/*'
+                Resource: !Sub 'arn:aws:s3:::${StaticFilesBucket}/*'
 
   ECSTaskRole:
     Type: AWS::IAM::Role
