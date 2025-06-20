@@ -92,16 +92,16 @@ jobs:
     - name: Update ECS service
       run: |
         aws ecs update-service \
-          --cluster production-baseball-power-rankings-cluster \
-          --service production-baseball-power-rankings-service \
+          --cluster production-bpr-cluster \
+          --service production-bpr-service \
           --force-new-deployment \
           --region ${{ env.AWS_REGION }}
 
     - name: Wait for deployment to complete
       run: |
         aws ecs wait services-stable \
-          --cluster production-baseball-power-rankings-cluster \
-          --services production-baseball-power-rankings-service \
+          --cluster production-bpr-cluster \
+          --services production-bpr-service \
           --region ${{ env.AWS_REGION }}
 
     - name: Get load balancer URL

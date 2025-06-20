@@ -6,8 +6,8 @@
 # Configuration
 AWS_REGION="us-east-2"
 STACK_NAME="baseball-power-rankings-stack"
-CLUSTER_NAME="production-baseball-power-rankings-cluster"
-SERVICE_NAME="production-baseball-power-rankings-service"
+CLUSTER_NAME="production-bpr-cluster"
+SERVICE_NAME="production-bpr-service"
 
 echo "📊 Baseball Power Rankings - Infrastructure Monitoring"
 echo "=================================================="
@@ -81,7 +81,7 @@ echo ""
 
 # Get recent CloudWatch logs
 echo "📝 Recent CloudWatch Logs (last 10 entries):"
-LOG_GROUP="/ecs/production-baseball-power-rankings"
+LOG_GROUP="/ecs/production-bpr"
 aws logs describe-log-streams \
     --log-group-name $LOG_GROUP \
     --region $AWS_REGION \
@@ -123,9 +123,9 @@ fi
 echo ""
 echo "🔗 Useful Links:"
 echo "AWS Console - ECS: https://console.aws.amazon.com/ecs/home?region=$AWS_REGION#/clusters/$CLUSTER_NAME"
-echo "AWS Console - CloudWatch: https://console.aws.amazon.com/cloudwatch/home?region=$AWS_REGION#logsV2:log-groups/log-group/\$252Fecs\$252Fproduction-baseball-power-rankings"
-echo "AWS Console - RDS: https://console.aws.amazon.com/rds/home?region=$AWS_REGION#database:id=production-baseball-power-rankings-db"
-echo "AWS Console - S3: https://console.aws.amazon.com/s3/buckets/production-baseball-power-rankings-static"
+echo "AWS Console - CloudWatch: https://console.aws.amazon.com/cloudwatch/home?region=$AWS_REGION#logsV2:log-groups/log-group/\$252Fecs\$252Fproduction-bpr"
+echo "AWS Console - RDS: https://console.aws.amazon.com/rds/home?region=$AWS_REGION#database:id=production-baseball-power-rankings-db-728078289631"
+echo "AWS Console - S3: https://console.aws.amazon.com/s3/buckets/production-baseball-power-rankings-static-728078289631"
 
 echo ""
 echo "📋 Useful Commands:"

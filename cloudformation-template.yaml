@@ -183,7 +183,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Sub '${Environment}-baseball-power-rankings-cluster'
+      ClusterName: !Sub '${Environment}-bpr-cluster'
       CapacityProviders:
         - FARGATE
       DefaultCapacityProviderStrategy:
@@ -289,7 +289,7 @@ Resources:
   ApplicationLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: !Sub '${Environment}-baseball-power-rankings-alb'
+      Name: !Sub '${Environment}-bpr-alb'
       Scheme: internet-facing
       Type: application
       Subnets:
@@ -322,7 +322,7 @@ Resources:
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
     Properties:
-      Name: !Sub '${Environment}-baseball-power-rankings-tg'
+      Name: !Sub '${Environment}-bpr-tg'
       Port: 10000
       Protocol: HTTP
       TargetType: ip
@@ -347,7 +347,7 @@ Resources:
     Type: AWS::ECS::Service
     DependsOn: Listener
     Properties:
-      ServiceName: !Sub '${Environment}-baseball-power-rankings-service'
+      ServiceName: !Sub '${Environment}-bpr-service'
       Cluster: !Ref ECSCluster
       TaskDefinition: !Ref ECSTaskDefinition
       DesiredCount: 1
@@ -369,7 +369,7 @@ Resources:
   CloudWatchLogGroup:
     Type: AWS::Logs::LogGroup
     Properties:
-      LogGroupName: !Sub '/ecs/${Environment}-baseball-power-rankings'
+      LogGroupName: !Sub '/ecs/${Environment}-bpr'
       RetentionInDays: 7
 
 Outputs:
