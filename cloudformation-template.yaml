@@ -162,7 +162,7 @@ Resources:
       DBInstanceIdentifier: !Sub '${Environment}-baseball-power-rankings-db-${AWS::AccountId}'
       DBInstanceClass: db.t3.micro
       Engine: postgres
-      EngineVersion: '13.7'
+      EngineVersion: '15.4'
       AllocatedStorage: 20
       StorageType: gp2
       MasterUsername: admin
