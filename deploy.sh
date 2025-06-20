@@ -71,6 +71,17 @@ echo "✅ Docker image pushed to ECR successfully"
 # Deploy CloudFormation stack
 echo "☁️ Deploying CloudFormation stack..."
 DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+
+# Check if stack exists and is in ROLLBACK_COMPLETE state
+STACK_STATUS=$(aws cloudformation describe-stacks --stack-name $STACK_NAME --region $AWS_REGION --query 'Stacks[0].StackStatus' --output text 2>/dev/null || echo "STACK_NOT_FOUND")
+
+if [ "$STACK_STATUS" = "ROLLBACK_COMPLETE" ]; then
+    echo "Stack is in ROLLBACK_COMPLETE state. Deleting stack..."
+    aws cloudformation delete-stack --stack-name $STACK_NAME --region $AWS_REGION
+    aws cloudformation wait stack-delete-complete --stack-name $STACK_NAME --region $AWS_REGION
+    echo "Stack deleted successfully."
+fi
+
 aws cloudformation deploy \
     --template-file cloudformation-template.yaml \
     --stack-name $STACK_NAME \

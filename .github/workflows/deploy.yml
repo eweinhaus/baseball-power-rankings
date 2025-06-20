@@ -44,6 +44,18 @@ jobs:
       run: |
         # Generate a random password for the database
         DB_PASSWORD=$(openssl rand -base64 32 | tr -d "=+/" | cut -c1-25)
+        
+        # Check if stack exists and is in ROLLBACK_COMPLETE state
+        STACK_STATUS=$(aws cloudformation describe-stacks --stack-name baseball-power-rankings-stack --region ${{ env.AWS_REGION }} --query 'Stacks[0].StackStatus' --output text 2>/dev/null || echo "STACK_NOT_FOUND")
+        
+        if [ "$STACK_STATUS" = "ROLLBACK_COMPLETE" ]; then
+          echo "Stack is in ROLLBACK_COMPLETE state. Deleting stack..."
+          aws cloudformation delete-stack --stack-name baseball-power-rankings-stack --region ${{ env.AWS_REGION }}
+          aws cloudformation wait stack-delete-complete --stack-name baseball-power-rankings-stack --region ${{ env.AWS_REGION }}
+          echo "Stack deleted successfully."
+        fi
+        
+        # Deploy the stack
         aws cloudformation deploy \
           --template-file cloudformation-template.yaml \
           --stack-name baseball-power-rankings-stack \
