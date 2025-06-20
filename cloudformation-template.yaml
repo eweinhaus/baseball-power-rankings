@@ -117,7 +117,7 @@ Resources:
   StaticFilesBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Sub '${Environment}-baseball-power-rankings-static'
+      BucketName: !Sub '${Environment}-baseball-power-rankings-static-${AWS::AccountId}'
       PublicAccessBlockConfiguration:
         BlockPublicAcls: true
         BlockPublicPolicy: true
@@ -159,7 +159,7 @@ Resources:
   Database:
     Type: AWS::RDS::DBInstance
     Properties:
-      DBInstanceIdentifier: !Sub '${Environment}-baseball-power-rankings-db'
+      DBInstanceIdentifier: !Sub '${Environment}-baseball-power-rankings-db-${AWS::AccountId}'
       DBInstanceClass: db.t3.micro
       Engine: postgres
       EngineVersion: '13.7'
@@ -194,7 +194,7 @@ Resources:
   ECSExecutionRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub '${Environment}-ecs-execution-role'
+      RoleName: !Sub '${Environment}-baseball-power-rankings-execution-role-${AWS::AccountId}'
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -219,7 +219,7 @@ Resources:
   ECSTaskRole:
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !Sub '${Environment}-ecs-task-role'
+      RoleName: !Sub '${Environment}-baseball-power-rankings-task-role-${AWS::AccountId}'
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:

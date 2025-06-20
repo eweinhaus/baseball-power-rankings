@@ -79,7 +79,15 @@ jobs:
           --stack-name baseball-power-rankings-stack \
           --parameter-overrides Environment=production DatabasePassword=$DB_PASSWORD \
           --capabilities CAPABILITY_NAMED_IAM \
-          --region ${{ env.AWS_REGION }}
+          --region ${{ env.AWS_REGION }} || {
+            echo "❌ CloudFormation deployment failed. Checking stack events..."
+            aws cloudformation describe-stack-events \
+              --stack-name baseball-power-rankings-stack \
+              --region ${{ env.AWS_REGION }} \
+              --query 'StackEvents[?ResourceStatus==`CREATE_FAILED` || ResourceStatus==`UPDATE_FAILED`].{Resource:LogicalResourceId,Status:ResourceStatus,Reason:ResourceStatusReason}' \
+              --output table
+            exit 1
+          }
 
     - name: Update ECS service
       run: |

@@ -72,7 +72,7 @@ echo ""
 # Get RDS database status
 echo "🗄️ RDS Database Status:"
 aws rds describe-db-instances \
-    --db-instance-identifier production-baseball-power-rankings-db \
+    --db-instance-identifier production-baseball-power-rankings-db-728078289631 \
     --region $AWS_REGION \
     --query 'DBInstances[0].{Status:DBInstanceStatus,Engine:Engine,Class:DBInstanceClass,Storage:AllocatedStorage}' \
     --output table
